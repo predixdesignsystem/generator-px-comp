@@ -1,0 +1,77 @@
+
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. ui tests, examples), we assume the server is started with
+    'grunt depserve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+<% if (mixinNames) {
+    mixinNames.forEach(function(mixin) {
+        %><link rel="import" href="../<%= mixin %>/<%= mixin %>.html"/><%
+    });
+} %>
+
+<!--
+Element providing solution to no problem in particular. As a simple, increments a counter when clicked.
+
+##### Usage
+
+    <<%= name %> counter-value="1">Hi</<%= name %>>
+
+@element <%= name %>
+@blurb Element providing solution to no problem in particular.
+@homepage index.html
+@demo demo.html
+-->
+<dom-module id="<%= name %>">
+    <link rel="import" type="css" href="css/<%= name %>.css"/>
+    <template>
+        <div class="circle counter" on-click="handleClick">
+            <span>{{counterValue}}</span>
+            <content></content>
+        </div>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+
+        is: '<%= name %>',
+
+        <% if (mixinNames) {%>
+        behaviors: [<%= mixinNames.join(',') %>],
+        <% } %>
+
+        /**
+         * Properties block, expose attribute values to the DOM via 'reflect'
+         *
+         * @property properties
+         * @type Object
+         */
+        properties: {
+            counterValue: {
+                type: Number,
+                reflect: true
+            }
+        },
+
+        /**
+         * Handles click on the element defined in 'on-click' on the template
+         *
+         * @method handleClick
+         */
+        handleClick: function(event, detail, sender) {
+            this.increment();
+        },
+
+        /**
+         * Increments the counter
+         *
+         * @method increment
+         */
+        increment: function () {
+            this.counterValue++;
+        }
+
+    });
+</script>

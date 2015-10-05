@@ -1,0 +1,53 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+        <title>seed-element</title>
+
+        <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+        <script src="../../web-component-tester/browser.js"></script>
+
+        <!-- Step 1: import the element to test -->
+        <link rel="import" href="../<%= name %>.html">
+    </head>
+    <body>
+
+        <!-- You use the document as a place to set up your fixtures. -->
+        <<%= name %> counterValue="1">Hi</<%= name %>>
+
+        <script>
+            var instance = document.querySelector('<%= name %>');
+
+            describe('Instancing <%= name %>', function () {
+
+                it('should automatically instance a <%= name %> from the expected DOM', function () {
+                    return chai.expect(instance).to.exist;
+                });
+
+                it('should have a default value', function () {
+                    return chai.expect(instance.counterValue).to.equal(1);
+                });
+            });
+
+            describe('Increment', function () {
+
+                it('should increment a counter', function () {
+                    instance.increment();
+                    return chai.expect(instance.counterValue).to.equal(2);
+                });
+
+            });
+        </script>
+
+    </body>
+</html>

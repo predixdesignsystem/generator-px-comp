@@ -148,6 +148,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('gitignore', '.gitignore');
     this.copy('bowerrc', '.bowerrc');
     this.copy('editorconfig', '.editorconfig');
+    this.copy('license.md', 'license.md');
 
     this.template('doc/_demo.html', 'demo.html', this);
     this.template('doc/_index.html', 'index.html', this);

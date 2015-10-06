@@ -1,9 +1,9 @@
-<%= _.titleize(name) %>
+<%= titleize(name) %>
 -----------------------------------------------
 
 ## Overview
 
-<%= _.titleize(name) %> is a Predix Experience ('Px') component
+<%= titleize(name) %> is a Predix Experience ('Px') component
 
 ## Getting Started
 

@@ -7,6 +7,9 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var localUtil = require('./../util/index');
 var exec = require('child_process').exec;
+var s = require("underscore.string");
+var mkdirp = require('mkdirp');
+
 
 var PxComponentGenerator = module.exports = function PxComponentGenerator(args, options, config) {
     yeoman.generators.Base.apply(this, arguments);
@@ -28,7 +31,7 @@ var PxComponentGenerator = module.exports = function PxComponentGenerator(args, 
         };
 
         //if (_this.testing) {
-            this.invoke('px-comp:test-ui', {options: subGenOptions, args: [_this.name], 'skip-install': true});
+            this.composeWith('px-comp:test-ui', {options: subGenOptions, args: [_this.name], 'skip-install': true});
         //}
 
         _this.installDependencies({ skipInstall: skipInstall, callback: function () {
@@ -55,7 +58,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         {
             name: 'name',
             message: 'What is the component\'s name, must have a "-", e.g. \'px-thing\'?',
-            default: (this._.slugify(this.appname).indexOf("-") !== -1) ? this._.slugify(this.appname) : "px-" + this._.slugify(this.appname)
+            default: (s(this.appname).slugify().value().indexOf("-") !== -1) ? s(this.appname).slugify().value() : "px-" + s(this.appname).slugify().value()
         },
         {
             name: "mixins",
@@ -77,8 +80,8 @@ PxComponentGenerator.prototype.askFor = function askFor() {
     ];
 
     this.prompt(prompts, function (props) {
-        this.name = this._.slugify(props.name);
-        this.objName = this._.classify(props.name);
+        this.name = s(props.name).slugify().value();
+        this.objName = s(props.name).slugify().value();
         this.mixins = props.mixins ? props.mixins.split(",") : null;
         this.mixinNames = props.mixins ? [] : null;
         this.extName = null;
@@ -117,7 +120,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
                 var fileName = fs.existsSync(path.resolve(this.extending + '/package.json')) ? '/package.json' : '/bower.json';
                 this.extPkg = JSON.parse(this.readFileAsString(this.extending + fileName));
                 this.extName = this.extPkg.name;
-                this.extObjName = this._.classify(this.extName);
+                this.extObjName = s(this.extName).slugify().value();
                 this.extRepo = this.extPkg.repository ? this.extPkg.repository.url : "https://github.com/change-this-in-bower.json-please.git";
             }
             catch(e) {
@@ -132,8 +135,8 @@ PxComponentGenerator.prototype.askFor = function askFor() {
 
 PxComponentGenerator.prototype.app = function app() {
 
-    this.mkdir('sass');
-    this.mkdir('test');
+    mkdirp('sass');
+    mkdirp('test');
 
     this.template('src/_component-polymer1.html', this.name + ".html", this);
     this.template('src/_component-sketch.scss', "sass/" + this.name + "-sketch.scss", this);
@@ -149,9 +152,14 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.template('doc/_demo.html', 'demo.html', this);
     this.template('doc/_index.html', 'index.html', this);
 
+    var context = {
+        titleize: s.titleize,
+        name: this.name
+    }
+
     this.template('_package.json', 'package.json', this);
     this.template('_favicon.ico', 'favicon.ico', this);
-    this.template('_README.md', 'README.md', this);
+    this.template('_README.md', 'README.md', context);
     this.template('_History.md', 'History.md', this);
 };
 

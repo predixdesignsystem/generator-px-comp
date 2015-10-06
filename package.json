@@ -1,44 +1,37 @@
 {
-    "name": "generator-px-comp",
-    "version": "0.0.2",
-    "description": "A Px component generator for Yeoman",
-    "keywords": [
-        "yeoman-generator"
-    ],
-    "homepage": "http://predix.io",
-    "bugs": "http://predix.io",
-    "author": {
-        "name": "",
-        "email": "",
-        "url": "http://predix.io"
-    },
-    "main": "app/index.js",
-    "repository": {
-        "type": "git",
-        "url": ""
-    },
-    "scripts": {
-        "test": "mocha"
-    },
-    "dependencies": {
-        "yeoman-generator": "~0.16.0",
-        "cheerio": "~0.13.0",
-        "chalk": "*"
-    },
-    "peerDependencies": {
-        "yo": ">=1.0.0",
-        "generator-mocha": ">=0.1.0"
-    },
-    "devDependencies": {
-        "mocha": "*"
-    },
-    "engines": {
-        "node": ">=0.8.0",
-        "npm": ">=1.2.10"
-    },
-    "licenses": [
-        {
-            "type": "MIT"
-        }
-    ]
+  "name": "generator-px-comp",
+  "version": "0.0.2",
+  "description": "A Px component generator for Yeoman",
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "homepage": "http://predix.io",
+  "bugs": "http://predix.io",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": "http://predix.io"
+  },
+  "main": "app/index.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "mkdirp": "^0.5.1",
+    "underscore.string": "^3.2.2",
+    "yeoman-generator": "~0.20.2"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
 }

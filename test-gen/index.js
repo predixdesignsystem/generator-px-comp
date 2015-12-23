@@ -20,7 +20,7 @@ module.exports = generators.Base.extend({
   },
 
   writing: function() {
-    this.varName = _dashesToUnderscore(this.tagname);
+    this.varName = this._dashesToUnderscore(this.tagname);
     this.fs.copyTpl(
       this.templatePath('fixture-template.html'),
       this.destinationPath('test/' + this.tagname + '-test-fixture.html'),

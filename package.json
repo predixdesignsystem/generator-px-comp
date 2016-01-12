@@ -1,6 +1,6 @@
 {
   "name": "generator-px-comp",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A Px component generator for Yeoman",
   "keywords": [
     "yeoman-generator"

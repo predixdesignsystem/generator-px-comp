@@ -1,6 +1,6 @@
 // This will be an automatically-generated variable based on the component
 // name provided to the pxtestkit yeoman generator
-var <%= varname %>;
+var <%= varname %>_1;
 
 // This is the bootstrapping function that will run the base and custom tests
 // upon the completion of web components construction by Polymer
@@ -95,6 +95,7 @@ function testCase(options) {
   // at this point eventSource is guaranteed to be an HTML element
   if (isAsync) {
     test(testDescription, function(done) {
+      var thisDone = done; // for use in event callback functions that don't recognize 'done'
       _deriveRoot();
       if (!(rootElement instanceof HTMLElement) && !(rootElement instanceof HTMLDocument)) {
         assert.isTrue(false);
@@ -118,7 +119,7 @@ function testCase(options) {
       eventSource.addEventListener(eventString, function() {
         setTimeout(function() {
           assert.isTrue(assertFunction(rootElement));
-          done();
+          thisDone();
         }, 50);
       });
       if (modifyFunction instanceof Function) {
@@ -144,7 +145,7 @@ function testCase(options) {
 function runBaseTests() {
   <%= varname %> = document.getElementById('<%= varname %>_1');
 
-  suite('Base Automation Tests for Data Table', function() {
+  suite('Base Automation Tests for <%= tagname %>', function() {
 
     test('Polymer exists', function() {
       assert.isTrue(Polymer !== null);

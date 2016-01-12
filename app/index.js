@@ -31,7 +31,7 @@ var PxComponentGenerator = module.exports = function PxComponentGenerator(args, 
         };
 
         //if (_this.testing) {
-            this.composeWith('px-comp:test-ui', {options: subGenOptions, args: [_this.name], 'skip-install': true});
+            this.composeWith('px-comp:test-gen', {options: subGenOptions, args: [_this.name], 'skip-install': true});
         //}
 
         _this.installDependencies({ skipInstall: skipInstall, callback: function () {
@@ -70,13 +70,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
             name: "cssDependencies",
             message: "Which of these common PXd Sass modules does your component need? (You can add more later in bower.json)",
             choices: localUtil.dependencyChoicesCss
-        }//,
-//        {
-//            type: "boolean",
-//            name: "testing",
-//            message: "Include automated testing support? (You should, but installs many dependencies. You can also configure later with 'yo px-comp:test-ui')",
-//            default: true
-//        }
+        }
     ];
 
     this.prompt(prompts, function (props) {
@@ -86,7 +80,6 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         this.mixinNames = props.mixins ? [] : null;
         this.extName = null;
         this.extending = props.extending;
-        //this.testing = props.testing;
         this.repoUrl = "https://github.com/PredixDev/change-this-in-package.json-please.git";
         this.dependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], "bower");
         this.devDependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], "bowerDev");

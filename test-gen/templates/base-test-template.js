@@ -42,6 +42,19 @@ document.addEventListener("WebComponentsReady", function() {
  *   an HTML element, the event source element can be any element in the DOM,
  *   and not necessarily a descendant of root.
  *
+ *   eventChain: optional
+ *   The eventChain is a collection/array of objects with the following
+ *   structure: { eventSource, eventString, modifyFunction } that are processed
+ *   in sequence by this function (testCase), to provide the simulation of tests
+ *   that involve a series of interactions from the end user.
+ *   At each stage of the series these steps are perfomed: an eventCallback is
+ *   added as an event listener to eventSource for the eventString event,
+ *   modifyFunction is called with rootElement as argument, then an event with
+ *   eventString is dispatched from eventSource.  The eventCallback added
+ *   earlier performs the same set of steps for the next stage.  If all stages
+ *   (all elements of the eventChain array) have been processed, eventCallback
+ *   finally calls assertFunction instead.
+ *
  *   event : optional
  *   The event string for the event that will be dispatched from event source.
  *   Specifying the event string will run the test() function asynchronously
@@ -61,8 +74,9 @@ document.addEventListener("WebComponentsReady", function() {
 **/
 
 function testCase(options) {
-  var testDescription, rootElement, eventSource, eventString, modifyFunction, assertFunction;
+  var testDescription, rootElement, eventSource, eventString, eventChain, modifyFunction, assertFunction;
   var isAsync = false;
+  var eventStr, eventSrc, modFn, assertFn;
   function _failTest(message) {
     test(message, function() {
       assert.isTrue(false);
@@ -75,6 +89,8 @@ function testCase(options) {
     eventString = options['event'] || '';
     modifyFunction = options['modifyFunction'];
     assertFunction = options['assertFunction'] || function() { return true; };
+    eventChain = options['eventChain'] ||
+      [{ 'eventSource': eventSource, 'eventString': eventString, 'modifyFunction': modifyFunction }];
   }
   // fail the test if options was not provided
   else {
@@ -88,44 +104,64 @@ function testCase(options) {
     }
   }
 
-  // if test is asynchronous (i.e., event was provided)
-  if (eventString !== '') {
+  // if test is asynchronous (i.e., eventString is non-blank or non-empty eventChain was provided)
+  if (eventString !== '' || (eventChain instanceof Array && eventChain.length > 0)) {
     isAsync = true;
   }
   // at this point eventSource is guaranteed to be an HTML element
   if (isAsync) {
+    if (eventChain === []) {
+      eventChain = [{'eventSource': eventSource, 'eventString': eventString, 'modifyFunction': modifyFunction}];
+    }
     test(testDescription, function(done) {
-      var thisDone = done; // for use in event callback functions that don't recognize 'done'
+      thisDone = done;
       _deriveRoot();
       if (!(rootElement instanceof HTMLElement) && !(rootElement instanceof HTMLDocument)) {
         assert.isTrue(false);
         done();
         return;
       }
-      if ( !(eventSource instanceof HTMLElement) &&
-           !(typeof eventSource === 'string') ) {
-        assert.isTrue(false);
-        done();
-        return;
+
+      // Add the interactions specified in the eventChain argument:
+      // The interactions are added in reverse order of event dispatching
+      // because of the general fact that event listeners are added before
+      // corresponding events are dispatched.
+
+      // Utility function that uses closure to generate callbacks for each event
+      // Without closure the test infinite-loops on the 2nd event;
+      function createCallback(eventSource, eventString, modifyFunction, rootElement) {
+        return function() {
+          if (modifyFunction instanceof Function) {
+            modifyFunction(rootElement);
+          }
+          eventSource.dispatchEvent(new Event(eventString));
+        }
       }
-      if (typeof eventSource === 'string') {
-        eventSource = rootElement.querySelector(eventSource);
+      // TODO: add validation on the eventChain structure and content types
+      for (var ecLength = eventChain.length, ecIndex = ecLength-1; ecIndex >= 0; ecIndex--) {
+        eventStr = eventChain[ecIndex].eventString;
+        eventSrc = document.querySelector(eventChain[ecIndex].eventSource);
+        if (ecIndex === (ecLength-1)) {
+          eventSrc.addEventListener(eventStr, function() {
+            assertFunction(rootElement);
+            thisDone();
+          });
+        }
+        else {
+          modFn = eventChain[ecIndex].modifyFunction;
+          var prevEventSrc = document.querySelector(eventChain[ecIndex+1].eventSource);
+          var prevEventStr = eventChain[ecIndex+1].eventString;
+          eventSrc.addEventListener(eventStr,
+            createCallback(
+              document.querySelector(eventChain[ecIndex+1].eventSource),
+              eventChain[ecIndex+1].eventString,
+              modFn,
+              rootElement
+            )
+          );
+        }
       }
-      if (eventSource === null) {
-        assert.isTrue(false);
-        done();
-        return;
-      }
-      eventSource.addEventListener(eventString, function() {
-        setTimeout(function() {
-          assert.isTrue(assertFunction(rootElement));
-          thisDone();
-        }, 50);
-      });
-      if (modifyFunction instanceof Function) {
-        modifyFunction(rootElement);
-      }
-      eventSource.dispatchEvent(new Event(eventString));
+      eventSrc.dispatchEvent(new Event(eventStr));
     })
   }
   else {

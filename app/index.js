@@ -141,7 +141,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('gitignore', '.gitignore');
     this.copy('bowerrc', '.bowerrc');
     this.copy('editorconfig', '.editorconfig');
-    this.copy('license.md', 'license.md');
+    this.copy('license.md', 'LICENSE.md');
 
     this.template('doc/_demo.html', 'demo.html', this);
     this.template('doc/_index.html', 'index.html', this);
@@ -154,7 +154,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.template('_package.json', 'package.json', this);
     this.template('_favicon.ico', 'favicon.ico', this);
     this.template('_README.md', 'README.md', context);
-    this.template('_History.md', 'History.md', this);
+    this.template('_History.md', 'HISTORY.md', this);
 };
 
 PxComponentGenerator.prototype.runtime = function runtime() {

@@ -100,7 +100,7 @@ function testCase(options) {
 
   function _deriveRoot() {
     if (typeof rootElement === 'string') {
-      rootElement = document.querySelector(rootElement);
+      rootElement = Polymer.dom(document).querySelector(rootElement);
     }
   }
 
@@ -135,17 +135,20 @@ function testCase(options) {
             modifyFunction(rootElement);
           }
           eventSource.dispatchEvent(new Event(eventString));
-        }
+        };
       }
+      var assertTest = function() {
+        flush(function() {
+          assertFunction(rootElement);
+          thisDone();
+        });
+      };
       // TODO: add validation on the eventChain structure and content types
       for (var ecLength = eventChain.length, ecIndex = ecLength-1; ecIndex >= 0; ecIndex--) {
         eventStr = eventChain[ecIndex].eventString;
         eventSrc = document.querySelector(eventChain[ecIndex].eventSource);
         if (ecIndex === (ecLength-1)) {
-          eventSrc.addEventListener(eventStr, function() {
-            assertFunction(rootElement);
-            thisDone();
-          });
+          eventSrc.addEventListener(eventStr, assertTest);
         }
         else {
           modFn = eventChain[ecIndex].modifyFunction;
@@ -162,7 +165,7 @@ function testCase(options) {
         }
       }
       eventSrc.dispatchEvent(new Event(eventStr));
-    })
+    });
   }
   else {
     test(testDescription, function() {
@@ -172,7 +175,7 @@ function testCase(options) {
         return;
       }
       assert.isTrue(assertFunction(rootElement));
-    })
+    });
   }
 }
 
@@ -191,4 +194,4 @@ function runBaseTests() {
     });
 
   });
-};
+}

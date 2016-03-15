@@ -62,7 +62,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         },
         {
             name: "mixins",
-            message: "Optional: Local paths to mix-ins the component uses, comma-separated (e.g. '../px-my-mixin,../px-my-other-mixin')",
+            message: "Optional: Local paths to Polymer behaviors the component uses, comma-separated (e.g. '../px-my-mixin,../px-my-other-mixin')",
             default: null
         },
         {

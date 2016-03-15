@@ -1,4 +1,3 @@
-
 <!--
     Relative paths assume component is being run from inside an app or another component, where dependencies are flat
     siblings. When this component is run from its own repo (e.g. ui tests, examples), we assume the server is started with
@@ -24,54 +23,49 @@ Element providing solution to no problem in particular. As a simple, increments 
 @demo demo.html
 -->
 <dom-module id="<%= name %>">
-    <link rel="import" type="css" href="css/<%= name %>.css"/>
-    <template>
-        <div class="circle counter" on-click="handleClick">
-            <span>{{counterValue}}</span>
-            <content></content>
-        </div>
-    </template>
+  <link rel="import" type="css" href="css/<%= name %>.css"/>
+  <template>
+    <a on-click="handleClick" href="javascript:;">Click here to increment counter:</a>
+    <span>{{counterValue}}</span>
+  </template>
 </dom-module>
 
 <script>
-    Polymer({
+  Polymer({
 
-        is: '<%= name %>',
+    is: '<%= name %>', <% if (mixinNames) {%> behaviors: [<%= mixinNames.join(',') %>], <% } %>
 
-        <% if (mixinNames) {%>
-        behaviors: [<%= mixinNames.join(',') %>],
-        <% } %>
-
-        /**
-         * Properties block, expose attribute values to the DOM via 'reflect'
+    /**
+         * Properties block, expose attribute values to the DOM via 'notify'
          *
          * @property properties
          * @type Object
          */
-        properties: {
-            counterValue: {
-                type: Number,
-                reflect: true
-            }
-        },
+    properties: {
+      counterValue: {
+        type: Number,
+        value: 0,
+        notify: true
+      }
+    },
 
-        /**
+    /**
          * Handles click on the element defined in 'on-click' on the template
          *
          * @method handleClick
          */
-        handleClick: function(event, detail, sender) {
-            this.increment();
-        },
+    handleClick: function(event, detail, sender) {
+      this.increment();
+    },
 
-        /**
+    /**
          * Increments the counter
          *
          * @method increment
          */
-        increment: function () {
-            this.counterValue++;
-        }
+    increment: function() {
+      this.counterValue++;
+    }
 
-    });
+  });
 </script>

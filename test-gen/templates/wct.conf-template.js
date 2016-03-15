@@ -1,5 +1,5 @@
 module.exports = {
-  verbose: true,
+  verbose: false,
   plugins: {
     local: {
       browsers: ['chrome', 'firefox']

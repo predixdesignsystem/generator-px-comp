@@ -46,21 +46,6 @@ Predix branding rules go in <%= name %>-predix.scss, not in this file.
 <% } %>
 
 // Component
-.circle {
-  cursor: pointer;
-  user-select: none;
-  box-sizing: content-box; /* Even though we use shadow DOM in this component, Safari insists on bleeding styles through from outside, so reset the resetting of this */
-  border: 1px black dashed;
-  font-size: 2rem;
-  text-align: center;
-  padding: 1.25rem .4rem .4rem .4rem;
-  border-radius: 50%;
-}
-.counter {
-  display: inline-block;
-  min-width: 6.5rem;
-  height: 3rem;
-}
 
 // Trumps
 @import "inuit-clearfix/_trumps.clearfix.scss";

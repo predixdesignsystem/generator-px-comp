@@ -41,7 +41,7 @@ var PxComponentGenerator = module.exports = function PxComponentGenerator(args, 
         });
     });
 
-    this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+    this.pkg = JSON.parse(require("html-wiring").readFileAsString(path.join(__dirname, '../package.json')));
 };
 
 util.inherits(PxComponentGenerator, yeoman.generators.Base);
@@ -97,7 +97,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
                 var _this = this;
                 this.mixins.forEach(function(mixin) {
                     var fileName = fs.existsSync(path.resolve(mixin + '/package.json')) ? '/package.json' : '/bower.json';
-                    var mixinPkg = JSON.parse(_this.readFileAsString(mixin + fileName));
+                    var mixinPkg = JSON.parse(require("html-wiring").readFileAsString(mixin + fileName));
                     _this.mixinNames.push(mixinPkg.name);
                     var mixinRepoUrl = mixinPkg.repository ? mixinPkg.repository.url : "https://github.com/change-this-in-bower.json-please.git";
                     _this.dependencies.push("\"" + mixinPkg.name + "\": \"" + mixinRepoUrl + "\""); //merge in mixin stuff
@@ -111,7 +111,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         if (this.extending) {
             try {
                 var fileName = fs.existsSync(path.resolve(this.extending + '/package.json')) ? '/package.json' : '/bower.json';
-                this.extPkg = JSON.parse(this.readFileAsString(this.extending + fileName));
+                this.extPkg = JSON.parse(require("html-wiring").readFileAsString(this.extending + fileName));
                 this.extName = this.extPkg.name;
                 this.extObjName = s(this.extName).slugify().value();
                 this.extRepo = this.extPkg.repository ? this.extPkg.repository.url : "https://github.com/change-this-in-bower.json-please.git";

@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "chalk": "^1.1.1",
+    "html-wiring": "^1.2.0",
     "mkdirp": "^0.5.1",
     "underscore.string": "^3.2.2",
     "yeoman-generator": "~0.20.2"

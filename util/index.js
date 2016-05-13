@@ -5,11 +5,11 @@ var exec = require('child_process').exec;
 module.exports = {
 
     dependencyChoicesCss: [
-        {name: "Buttons", value: {bowerDev: "\"px-meta-buttons-design\": \"https://github.com/PredixDev/px-meta-buttons-design.git#~0.5.2\","}},
-        {name: "Lists", value: {bowerDev: "\"px-meta-lists-design\": \"https://github.com/PredixDev/px-meta-lists-design.git#~0.3.2\","}},
-        {name: "Forms", value: {bowerDev: "\"px-forms-design\": \"https://github.com/PredixDev/px-forms-design.git#~0.3.11\","}},
-        {name: "Headings", value: {bowerDev: "\"px-headings-design\": \"https://github.com/PredixDev/px-headings-design.git#~0.2.10\","}},
-        {name: "Tables", value: {bowerDev: "\"px-tables-design\": \"https://github.com/PredixDev/px-tables-design.git#~0.3.10\","}}
+        {name: "Buttons", value: {bowerDev: "\"px-meta-buttons-design\": \"https://github.com/PredixDev/px-meta-buttons-design.git#~0.5.5\","}},
+        {name: "Lists", value: {bowerDev: "\"px-meta-lists-design\": \"https://github.com/PredixDev/px-meta-lists-design.git#~0.3.4\","}},
+        {name: "Forms", value: {bowerDev: "\"px-forms-design\": \"https://github.com/PredixDev/px-forms-design.git#~0.3.16\","}},
+        {name: "Headings", value: {bowerDev: "\"px-headings-design\": \"https://github.com/PredixDev/px-headings-design.git#~0.2.13\","}},
+        {name: "Tables", value: {bowerDev: "\"px-tables-design\": \"https://github.com/PredixDev/px-tables-design.git#~0.3.13\","}}
     ],
 
     dependencyChoicesTest: [

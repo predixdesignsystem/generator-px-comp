@@ -5,11 +5,17 @@ var exec = require('child_process').exec;
 module.exports = {
 
     dependencyChoicesCss: [
-        {name: "Buttons", value: {bowerDev: "\"px-meta-buttons-design\": \"https://github.com/PredixDev/px-meta-buttons-design.git#~0.5.5\","}},
-        {name: "Lists", value: {bowerDev: "\"px-meta-lists-design\": \"https://github.com/PredixDev/px-meta-lists-design.git#~0.3.4\","}},
-        {name: "Forms", value: {bowerDev: "\"px-forms-design\": \"https://github.com/PredixDev/px-forms-design.git#~0.3.16\","}},
-        {name: "Headings", value: {bowerDev: "\"px-headings-design\": \"https://github.com/PredixDev/px-headings-design.git#~0.2.13\","}},
-        {name: "Tables", value: {bowerDev: "\"px-tables-design\": \"https://github.com/PredixDev/px-tables-design.git#~0.3.13\","}}
+        {name: "Buttons", value: {bowerDev: "\"px-meta-buttons-design\": \"~0.5.5\","}},
+        {name: "Lists", value: {bowerDev: "\"px-meta-lists-design\": \"~0.3.4\","}},
+        {name: "Forms", value: {bowerDev: "\"px-forms-design\": \"~0.3.16\","}},
+        {name: "Headings", value: {bowerDev: "\"px-headings-design\": \"~0.2.13\","}},
+        {name: "Tables", value: {bowerDev: "\"px-tables-design\": \"~0.3.13\","}},
+        {name: "Flexbox Layout", value: {bowerDev: "\"px-layout-design\": \"~0.3.13\","}},
+        {name: "Toogle Switch", value: {bowerDev: "\"px-toggle-design\": \"~0.2.12\","}},
+        {name: "Content Box", value: {bowerDev: "\"px-box-design\": \"~0.3.13\","}},
+        {name: "Code Snippets Styling", value: {bowerDev: "\"px-code-design\": \"~0.2.11\","}},
+        {name: "Input Groups", value: {bowerDev: "\"px-input-group-design\": \"~0.2.12\","}},
+        {name: "Flag/Media Object", value: {bowerDev: "\"px-flag-design\": \"~0.2.12\","}}
     ],
 
     dependencyChoicesTest: [

@@ -15,11 +15,11 @@
   ],
   "dependencies": {
     "polymer": "~1.4.0",
-    "px-theme": "https://github.com/PredixDev/px-theme.git#~0.7.1"
+    "px-theme": "~0.7.1"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#~v1.1.6",
     <%- devDependencies.join('\n        ') %>
-    "px-starter-kit-design": "https://github.com/PredixDev/px-starter-kit-design.git#~0.5.5"
+    "px-starter-kit-design": "~0.5.5"
   }
 }

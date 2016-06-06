@@ -1,13 +1,50 @@
-<%= titleize(name) %>
------------------------------------------------
+#<%= titleize(name) %>
 
 ## Overview
 
-<%= titleize(name) %> is a Predix Experience ('Px') component
+<%= titleize(name) %> is a Predix UI component
+
+## Usage
+
+### Prerequisites
+1. node.js
+2. npm
+3. bower
+4. [webcomponents-lite.js polyfill](https://github.com/webcomponents/webcomponentsjs)
+
+Node, npm and bower are necessary to install the component and dependencies. webcomponents.js adds support for web components and custom elements to your application.
 
 ## Getting Started
 
-Read https://github.com/pages/PX/technical-principles/
+First, install the component via bower on the command line.
+
+```
+bower install <%= titleize(name) %> --save
+```
+
+Second, import the component to your application with the following tag in your head.
+
+```
+<link rel="import" href="/bower_components/<%= titleize(name) %>/<%= titleize(name) %>.html"/>
+```
+
+Finally, use the component in your application:
+
+```
+Insert Your demo code here.
+```
+
+<br />
+<hr />
+
+## documentation
+
+Read the full API and view the demo [here](https://predixdev.github.io/<%= titleize(name) %>).
+
+The documentation in this repository is supplemental to the official Predix documentation, which is continuously updated and maintained by the Predix documentation team. Go to [http://predix.io](http://predix.io)  to see the official Predix documentation.
+
+
+## Local Development
 
 From the component's directory...
 
@@ -17,81 +54,29 @@ $ bower install
 $ grunt sass
 ```
 
-### API and examples
-
-From the component's directory
+From the component's directory, to start a local server run:
 
 ```
 $ grunt depserve
 ```
 
-Starts a local server. Navigate to the root of that server (e.g. http://localhost:8080/) in a browser to open the API documentation page, with link to the "Demo" / working examples.
+Navigate to the root of that server (e.g. http://localhost:8080/) in a browser to open the API documentation page, with link to the "Demo" / working examples.
 
-### LiveReload
-
-By default grunt depserve is configured to enable LiveReload and will be watching for modifications in your root directory as well as `/css`.
-
-Your browser will also need to have the LiveReload extension installed and enabled. For instructions on how to do this please refer to [livereload.com/extensions/](http://livereload.com/extensions/).
-
-Add, remove, modify file system patterns specified in the `depserve.options.livereload` array in your `Gruntfile.js`
-
-This is an example depserve configuration:
-
-```
-depserve: {
-    options: {
-        open: '&lt;%= depserveOpenUrl %&gt;,
-        livereload: [__dirname + "/js", __dirname + "/css", __dirname]
-    }
-}
-```
-
-Disable LiveReload by removing the `livereload` key from the configuration object.
 
 ### DevMode
-
+Devmode runs `grunt depserve` and `grunt watch` concurrently so that when you make a change to your source files and save them, your preview will be updated in any browsers you have opened and turned on LiveReload.
 From the component's directory run:
 
 ```
 $ grunt devmode
 ```
 
-Starts a local server exactly the same as if you had run `grunt depserve` however in addition it also runs `grunt watch` concurrently which will execute commands on file change according to the specified matching patterns.
-
-This is an example `grunt watch` configuration which watches for changes to SASS files, then on changes executes SASS compilation and automatic prefixing:
-
-```
-watch: {
-    sass: {
-        files: ['sass/**/*.scss'],
-        tasks: ['sass', 'autoprefixer'],
-        options: {
-            interrupt: true
-        }
-    }
-}
-```
-
-### Options
-
-Does this component have runtime configuration options?  If so, they should be able to be passed as attributes on the element with examples shown below.
-
-### Function calls
-
-What is the public API of this component?
-
-### Extending styles
-
-Documented CSS extension points?
-
-### Extending behavior
-
-See Polymer composition patterns
-
-GE Coding Style Guide
----------------------
-
+### GE Coding Style Guide
 [GE JS Developer's Guide](https://github.com/GeneralElectric/javascript)
 
+<br />
+<hr />
 
-### Known Issues
+## Known Issues
+
+Please use [Github Issues](https://github.com/PredixDev/<%= titleize(name) %>/issues) to submit any bugs you might find.

@@ -31,7 +31,7 @@ var PxComponentGenerator = module.exports = function PxComponentGenerator(args, 
         };
 
         //if (_this.testing) {
-            this.composeWith('px-comp:test-ui', {options: subGenOptions, args: [_this.name], 'skip-install': true});
+            this.composeWith('px-comp:test-gen', {options: subGenOptions, args: [_this.name], 'skip-install': true});
         //}
 
         _this.installDependencies({ skipInstall: skipInstall, callback: function () {
@@ -41,7 +41,7 @@ var PxComponentGenerator = module.exports = function PxComponentGenerator(args, 
         });
     });
 
-    this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+    this.pkg = JSON.parse(require("html-wiring").readFileAsString(path.join(__dirname, '../package.json')));
 };
 
 util.inherits(PxComponentGenerator, yeoman.generators.Base);
@@ -62,7 +62,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         },
         {
             name: "mixins",
-            message: "Optional: Local paths to mix-ins the component uses, comma-separated (e.g. '../px-my-mixin,../px-my-other-mixin')",
+            message: "Optional: Local paths to Polymer behaviors the component uses, comma-separated (e.g. '../px-my-mixin,../px-my-other-mixin')",
             default: null
         },
         {
@@ -70,13 +70,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
             name: "cssDependencies",
             message: "Which of these common PXd Sass modules does your component need? (You can add more later in bower.json)",
             choices: localUtil.dependencyChoicesCss
-        }//,
-//        {
-//            type: "boolean",
-//            name: "testing",
-//            message: "Include automated testing support? (You should, but installs many dependencies. You can also configure later with 'yo px-comp:test-ui')",
-//            default: true
-//        }
+        }
     ];
 
     this.prompt(prompts, function (props) {
@@ -86,7 +80,6 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         this.mixinNames = props.mixins ? [] : null;
         this.extName = null;
         this.extending = props.extending;
-        //this.testing = props.testing;
         this.repoUrl = "https://github.com/PredixDev/change-this-in-package.json-please.git";
         this.dependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], "bower");
         this.devDependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], "bowerDev");
@@ -104,7 +97,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
                 var _this = this;
                 this.mixins.forEach(function(mixin) {
                     var fileName = fs.existsSync(path.resolve(mixin + '/package.json')) ? '/package.json' : '/bower.json';
-                    var mixinPkg = JSON.parse(_this.readFileAsString(mixin + fileName));
+                    var mixinPkg = JSON.parse(require("html-wiring").readFileAsString(mixin + fileName));
                     _this.mixinNames.push(mixinPkg.name);
                     var mixinRepoUrl = mixinPkg.repository ? mixinPkg.repository.url : "https://github.com/change-this-in-bower.json-please.git";
                     _this.dependencies.push("\"" + mixinPkg.name + "\": \"" + mixinRepoUrl + "\""); //merge in mixin stuff
@@ -118,7 +111,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         if (this.extending) {
             try {
                 var fileName = fs.existsSync(path.resolve(this.extending + '/package.json')) ? '/package.json' : '/bower.json';
-                this.extPkg = JSON.parse(this.readFileAsString(this.extending + fileName));
+                this.extPkg = JSON.parse(require("html-wiring").readFileAsString(this.extending + fileName));
                 this.extName = this.extPkg.name;
                 this.extObjName = s(this.extName).slugify().value();
                 this.extRepo = this.extPkg.repository ? this.extPkg.repository.url : "https://github.com/change-this-in-bower.json-please.git";
@@ -149,10 +142,10 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('gitignore', '.gitignore');
     this.copy('bowerrc', '.bowerrc');
     this.copy('editorconfig', '.editorconfig');
-    this.copy('license.md', 'license.md');
+    this.copy('license.md', 'LICENSE.md');
     this.copy('.github/PULL_REQUEST_TEMPLATE.md', '.github/PULL_REQUEST_TEMPLATE.md');
     this.copy('.github/ISSUE_TEMPLATE.md', '.github/ISSUE_TEMPLATE.md');
-    this.copy('.github/CONTRIBUTING.md', 'CONTRIBUTING.md');
+    this.copy('CONTRIBUTING.md', 'CONTRIBUTING.md');
 
     this.template('doc/_demo.html', 'demo.html', this);
     this.template('doc/_index.html', 'index.html', this);
@@ -165,7 +158,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.template('_package.json', 'package.json', this);
     this.template('_favicon.ico', 'favicon.ico', this);
     this.template('_README.md', 'README.md', context);
-    this.template('_History.md', 'History.md', this);
+    this.template('_History.md', 'HISTORY.md', this);
 };
 
 PxComponentGenerator.prototype.runtime = function runtime() {

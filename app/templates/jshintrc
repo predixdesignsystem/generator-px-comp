@@ -30,6 +30,9 @@
         "$"         : true,
         "define"    : false,
         "angular": false,
-        "Polymer": false        
+        "Polymer": false,
+        "suite": false,
+        "test": false,
+        "assert": false
     }
 }

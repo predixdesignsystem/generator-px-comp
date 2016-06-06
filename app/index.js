@@ -7,7 +7,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var localUtil = require('./../util/index');
 var exec = require('child_process').exec;
-var s = require("underscore.string");
+var s = require('underscore.string');
 var mkdirp = require('mkdirp');
 
 
@@ -137,6 +137,7 @@ PxComponentGenerator.prototype.app = function app() {
 
     mkdirp('sass');
     mkdirp('test');
+    mkdirp('.github');
 
     this.template('src/_component-polymer1.html', this.name + ".html", this);
     this.template('src/_component-sketch.scss', "sass/" + this.name + "-sketch.scss", this);
@@ -149,6 +150,9 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('bowerrc', '.bowerrc');
     this.copy('editorconfig', '.editorconfig');
     this.copy('license.md', 'license.md');
+    this.copy('.github/PULL_REQUEST_TEMPLATE.md', '.github/PULL_REQUEST_TEMPLATE.md');
+    this.copy('.github/ISSUE_TEMPLATE.md', '.github/ISSUE_TEMPLATE.md');
+    this.copy('.github/CONTRIBUTING.md', 'CONTRIBUTING.md');
 
     this.template('doc/_demo.html', 'demo.html', this);
     this.template('doc/_index.html', 'index.html', this);
@@ -156,7 +160,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     var context = {
         titleize: s.titleize,
         name: this.name
-    }
+    };
 
     this.template('_package.json', 'package.json', this);
     this.template('_favicon.ico', 'favicon.ico', this);

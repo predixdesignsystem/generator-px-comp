@@ -143,8 +143,8 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('bowerrc', '.bowerrc');
     this.copy('editorconfig', '.editorconfig');
     this.copy('license.md', 'LICENSE.md');
-    this.copy('.github/PULL_REQUEST_TEMPLATE.md', '.github/PULL_REQUEST_TEMPLATE.md');
-    this.copy('.github/ISSUE_TEMPLATE.md', '.github/ISSUE_TEMPLATE.md');
+    this.copy('src/.github/PULL_REQUEST_TEMPLATE.md', '.github/PULL_REQUEST_TEMPLATE.md');
+    this.copy('src/.github/ISSUE_TEMPLATE.md', '.github/ISSUE_TEMPLATE.md');
     this.copy('CONTRIBUTING.md', 'CONTRIBUTING.md');
 
     this.template('doc/_demo.html', 'demo.html', this);

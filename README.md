@@ -186,15 +186,13 @@ After you've cleaned the cache it might also be a good idea to delete that compo
 
 ## Running on an existing component
 
-The `px-comp` has two "sub-generators" in it to scaffold tests, `px-comp:test-unit` and `px-comp:test-ui`. Both of these sub-generators are run when the full px-comp generator is run.
-You may run the sub-generators individually on existing components that don't yet have automated tests:
+The `px-comp` has a "sub-generator" in it to scaffold tests - `px-comp:test-gen`. this sub-generator is also run when the full px-comp generator is run.
+
+You may run the sub-generator individually on existing components that doesn't already have tests:
 
 ```
 $ cd my-existing-component
-$ yo px-comp:test-unit
-$ yo px-comp:test-ui
+$ yo px-comp:test-gen <COMPONENT>
 ```
 
-Sample tests will be generated. You'll need to edit the sample tests in order for them to pass, as the sample tests created by the generator assume
-the component being tested is the sample Px component itself, not your existing component.  You'll also need to manually edit the Gruntfile.js and package.json to match the examples
-in the `webdriver-support` and `karma-support` projects in order to pull in testing dependencies and enable the `grunt test` task.
+Sample tests will be generated in the test folder. You'll need to edit the sample tests and add your own test to the base tests. Add your tests inside the COMPONENT-custom-tests.js file.  If you already have existing tests specified in wct.conf.js, make sure not to overwrite the file, and add the new tests manually under the suites array in wct.conf.js.

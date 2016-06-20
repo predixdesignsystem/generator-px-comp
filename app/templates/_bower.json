@@ -14,8 +14,8 @@
     "test"
   ],
   "dependencies": {
-    "polymer": "~1.4.0",
-    "px-theme": "~0.7.1"
+    "polymer": "^1.5.0",
+    "px-theme": "~0.8.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#~v1.1.6",

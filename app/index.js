@@ -35,8 +35,8 @@ var PxComponentGenerator = module.exports = function PxComponentGenerator(args, 
         //}
 
         _this.installDependencies({ skipInstall: skipInstall, callback: function () {
-                console.log("Generator finished. Running 'grunt firstrun' to show you the API docs and demo pages...");
-                _this.spawnCommand('grunt', ['firstrun']);
+                console.log("Generator finished. Running 'gulp' to show you the API docs and demo pages...");
+                _this.spawnCommand('gulp', ['serve']);
             }
         });
     });
@@ -52,7 +52,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
     // have Yeoman greet the user.
     console.log(chalk.yellow('\n\nHello! Answer the prompts to scaffold a Px component.\n'));
     console.log(chalk.yellow('The generated component itself is not fancy (it makes a circle on the screen that increments a counter when clicked),'));
-    console.log(chalk.yellow('but contains the Bower config, Gruntfile, tests, etc. common to all Px components...\n\n'));
+    console.log(chalk.yellow('but contains the Bower config, gulpfile, tests, etc. common to all Px components...\n\n'));
 
     var prompts = [
         {
@@ -162,6 +162,6 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
 };
 
 PxComponentGenerator.prototype.runtime = function runtime() {
-    this.template('_Gruntfile.js', 'Gruntfile.js', this);
+    this.template('_gulpfile.js', 'gulpfile.js', this);
     this.template('_bower.json', 'bower.json', this);
 };

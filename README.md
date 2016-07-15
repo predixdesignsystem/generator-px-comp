@@ -37,24 +37,24 @@ $ cd px-something
 $ yo px-comp
 ```
 
-Running `yo px-comp` will ask you a few questions and then scaffold a sample component, which includes Gruntfile.js, package.json, bower.json, tests, etc in your directory.
+Running `yo px-comp` will ask you a few questions and then scaffold a sample component, which includes gulpfile.js, package.json, bower.json, tests, etc in your directory.
 
 Once you have a sample Predix UI component, you can...
 
 ```
 //build css
-$ grunt sass
+$ gulp sass
 
 //start a local server
-$ grunt depserve
+$ gulp serve
 
 //nav in a browser to
 localhost:8080
 ```
 
-`grunt sass` compiles [Sass](http://sass-lang.com/) into CSS.
+`gulp sass` compiles [Sass](http://sass-lang.com/) into CSS.
 
-`grunt depserve` starts a simple node HTTP server that enables correct finding of bower dependencies for local runs.
+`gulp serve` starts a HTTP server that enables correct finding of bower dependencies for local runs. It also runs [Browsersync](https://www.browsersync.io/) to automatically rebuild sass and reload the current page when a change occurs.
 
 After you've verified the component works, edit the sample Predix UI component, tests and dependencies that were scaffolded.
 
@@ -67,7 +67,7 @@ The files that are part of the Px component are:
 
 - **package.json** — An [npm](https://npmjs.org/) package file for specifying information and dependencies.
 - **.travis.yml** - A build file for the [travis CI](https://travis-ci.org/) testing platform.
-- **Gruntfile.js** — A build file for the [Grunt](http://gruntjs.com/) task runner.
+- **gulpfile.js** — A build file for the [gulp](http://gulpjs.com/) task runner.
 - **bower.json** — A [Bower](http://bower.io/) package file for specifying information and dependencies.
 - **.bowerrc** - A configuration file for bower.
 - **editorconfig** - A configuration file for your editor, with preconfigured recommended settings you can change according to your own specifications.
@@ -101,13 +101,13 @@ A component **must** meet the following requirements to be considered part of th
 
 ### npm
 
-[npm](https://npmjs.org/) is a package manger for Node.js. We rely heavily on npm to install our grunt tasks, and also to install some of our tools like Bower and Grunt itself. If you've installed Node.js then npm should already be available on your system. Be sure to familiarize yourself with npm first and foremost as it is used throughout the component/Predix landscape.
+[npm](https://npmjs.org/) is a package manger for Node.js. We rely heavily on npm to install our gulp tasks, and also to install some of our tools like Bower and gulp itself. If you've installed Node.js then npm should already be available on your system. Be sure to familiarize yourself with npm first and foremost as it is used throughout the component/Predix landscape.
 
-### Grunt
+### Gulp
 
-We use [Grunt](http://gruntjs.com/) to build all of our components and Design Extensions. Take some time to familiarize yourself with the [Grunt documentation.](http://gruntjs.com/)
+We use [gulp](http://gulpjs.com/) to build all of our components and Design Extensions. Take some time to familiarize yourself with the [gulp documentation.](http://gulpjs.com/)
 
-The Component Seed comes with two built in grunt tasks: `grunt install` and simply `grunt`. The `grunt install` task will pull down all of your dependencies using Bower and generate a RequireJS config file for you. The basic `grunt` task will just attempt to compile all of your SASS files to CSS. Under the hood `grunt install` will call `grunt` as its final step, so you should only need to run `grunt` if you've made style changes post-install.
+The Component Seed comes with two built in gulp tasks: `gulp serve` and simply `gulp`. The default `gulp` task will clean, build css and a [Polymer style module](https://www.polymer-project.org/1.0/docs/devguide/styling) from the .scss files in the `/sass` folder. The `gulp serve` task will start up a http server to serve up your documentation/demo pages as well as [Browsersync](https://www.browsersync.io/) to automatically reload the page as HTML changes as well as recompile sass into css (and reload the current page) as it changes.
 
 ### Bower
 
@@ -182,7 +182,7 @@ $ bower cache clean
 # Will just clear the cache of your component
 $ bower cache clean <component>
 ```
-After you've cleaned the cache it might also be a good idea to delete that component's folder from the `components` directory. Then you can try to run `grunt install` again.
+After you've cleaned the cache it might also be a good idea to delete that component's folder from the `components` directory. Then you can try to run `bower install` again.
 
 ## Running on an existing component
 

@@ -76,7 +76,7 @@ gulp.task('serve', function() {
   });
 
   gulp.watch(['!${pkg.name}-styles.html', '*.html', 'bower_components/**/*.html']).on('change', browserSync.reload);
-  gulp.watch('sass/*.scss', ['sass']);
+  gulp.watch('sass/*.scss', ['default']);
 
 });
 

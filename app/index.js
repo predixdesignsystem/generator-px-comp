@@ -35,13 +35,14 @@ var PxComponentGenerator = module.exports = function PxComponentGenerator(args, 
         //}
 
         _this.installDependencies({ skipInstall: skipInstall, callback: function () {
-                console.log("Generator finished. Running 'gulp' to show you the API docs and demo pages...");
+                console.log('Generator finished. Running \'gulp\' to show you the API docs and demo pages...');
+                _this.spawnCommand('gulp');
                 _this.spawnCommand('gulp', ['serve']);
             }
         });
     });
 
-    this.pkg = JSON.parse(require("html-wiring").readFileAsString(path.join(__dirname, '../package.json')));
+    this.pkg = JSON.parse(require('html-wiring').readFileAsString(path.join(__dirname, '../package.json')));
 };
 
 util.inherits(PxComponentGenerator, yeoman.generators.Base);
@@ -58,17 +59,17 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         {
             name: 'name',
             message: 'What is the component\'s name, must have a "-", e.g. \'px-thing\'?',
-            default: (s(this.appname).slugify().value().indexOf("-") !== -1) ? s(this.appname).slugify().value() : "px-" + s(this.appname).slugify().value()
+            default: (s(this.appname).slugify().value().indexOf('-') !== -1) ? s(this.appname).slugify().value() : 'px-' + s(this.appname).slugify().value()
         },
         {
-            name: "mixins",
-            message: "Optional: Local paths to Polymer behaviors the component uses, comma-separated (e.g. '../px-my-mixin,../px-my-other-mixin')",
+            name: 'mixins',
+            message: 'Optional: Local paths to Polymer behaviors the component uses, comma-separated (e.g. \'../px-my-mixin,../px-my-other-mixin\')',
             default: null
         },
         {
-            type: "checkbox",
-            name: "cssDependencies",
-            message: "Which of these common PXd Sass modules does your component need? (You can add more later in bower.json)",
+            type: 'checkbox',
+            name: 'cssDependencies',
+            message: 'Which of these common PXd Sass modules does your component need? (You can add more later in bower.json)',
             choices: localUtil.dependencyChoicesCss
         }
     ];
@@ -76,50 +77,48 @@ PxComponentGenerator.prototype.askFor = function askFor() {
     this.prompt(prompts, function (props) {
         this.name = s(props.name).slugify().value();
         this.objName = s(props.name).slugify().value();
-        this.mixins = props.mixins ? props.mixins.split(",") : null;
+        this.mixins = props.mixins ? props.mixins.split(',') : null;
         this.mixinNames = props.mixins ? [] : null;
         this.extName = null;
         this.extending = props.extending;
-        this.repoUrl = "https://github.com/PredixDev/change-this-in-package.json-please.git";
-        this.dependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], "bower");
-        this.devDependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], "bowerDev");
+        this.repoUrl = 'https://github.com/PredixDev/change-this-in-package.json-please.git';
+        this.dependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], 'bower');
+        this.devDependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], 'bowerDev');
 
         if (props.cssDependencies.length > 0) {
-            Array.prototype.push.apply(this.devDependencies, localUtil.resolveDependencies(props.cssDependencies, "bowerDev"));//merge in css stuff
+            Array.prototype.push.apply(this.devDependencies, localUtil.resolveDependencies(props.cssDependencies, 'bowerDev'));//merge in css stuff
         }
 
-//        if (props.testing) {
-            Array.prototype.push.apply(this.devDependencies, localUtil.resolveDependencies(localUtil['dependencyChoicesTest'], "bowerDev"));//merge in test stuff
-//        }
+        Array.prototype.push.apply(this.devDependencies, localUtil.resolveDependencies(localUtil['dependencyChoicesTest'], 'bowerDev'));//merge in test stuff
 
         if (this.mixins) {
             try {
                 var _this = this;
                 this.mixins.forEach(function(mixin) {
                     var fileName = fs.existsSync(path.resolve(mixin + '/package.json')) ? '/package.json' : '/bower.json';
-                    var mixinPkg = JSON.parse(require("html-wiring").readFileAsString(mixin + fileName));
+                    var mixinPkg = JSON.parse(require('html-wiring').readFileAsString(mixin + fileName));
                     _this.mixinNames.push(mixinPkg.name);
-                    var mixinRepoUrl = mixinPkg.repository ? mixinPkg.repository.url : "https://github.com/change-this-in-bower.json-please.git";
-                    _this.dependencies.push("\"" + mixinPkg.name + "\": \"" + mixinRepoUrl + "\""); //merge in mixin stuff
+                    var mixinRepoUrl = mixinPkg.repository ? mixinPkg.repository.url : 'https://github.com/change-this-in-bower.json-please.git';
+                    _this.dependencies.push('"' + mixinPkg.name + '": "' + mixinRepoUrl + '"'); //merge in mixin stuff
                 });
             }
             catch(e) {
-                throw new Error("If mixing in a library, the given directory of that library must be local, and contain a 'package.json' with a 'repository: {url : ...}' entry. " + e.message);
+                throw new Error('If mixing in a library, the given directory of that library must be local, and contain a \'package.json\' with a \'repository: {url : ...}\' entry. ' + e.message);
             }
         }
 
         if (this.extending) {
             try {
                 var fileName = fs.existsSync(path.resolve(this.extending + '/package.json')) ? '/package.json' : '/bower.json';
-                this.extPkg = JSON.parse(require("html-wiring").readFileAsString(this.extending + fileName));
+                this.extPkg = JSON.parse(require('html-wiring').readFileAsString(this.extending + fileName));
                 this.extName = this.extPkg.name;
                 this.extObjName = s(this.extName).slugify().value();
-                this.extRepo = this.extPkg.repository ? this.extPkg.repository.url : "https://github.com/change-this-in-bower.json-please.git";
+                this.extRepo = this.extPkg.repository ? this.extPkg.repository.url : 'https://github.com/change-this-in-bower.json-please.git';
             }
             catch(e) {
-                throw new Error("If extending an existing component, the given directory of that component must be local, and contain a 'package.json' and 'repository: {url : ...}' entries. " + e.message);
+                throw new Error('If extending an existing component, the given directory of that component must be local, and contain a \'package.json\' and \'repository: {url : ...}\' entries. ' + e.message);
             }
-            this.dependencies.push("\"" + this.extName + "\": \"" + this.extRepo + "\""); //merge in extends stuff
+            this.dependencies.push('"' + this.extName + '": "' + this.extRepo + '"'); //merge in extends stuff
         }
 
         cb();
@@ -132,9 +131,9 @@ PxComponentGenerator.prototype.app = function app() {
     mkdirp('test');
     mkdirp('.github');
 
-    this.template('src/_component-polymer1.html', this.name + ".html", this);
-    this.template('src/_component-sketch.scss', "sass/" + this.name + "-sketch.scss", this);
-    this.template('src/_component-predix.scss', "sass/" + this.name + "-predix.scss", this);
+    this.template('src/_component-polymer1.html', this.name + '.html', this);
+    this.template('src/_component-sketch.scss', 'sass/' + this.name + '-sketch.scss', this);
+    this.template('src/_component-predix.scss', 'sass/' + this.name + '-predix.scss', this);
 };
 
 PxComponentGenerator.prototype.projectfiles = function projectfiles() {

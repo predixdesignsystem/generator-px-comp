@@ -1,9 +1,10 @@
+'use strict';
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
 
   _dashesToUnderscore: function(inputString) {
-    inString = inputString || '';
+    var inString = inputString || '';
     return inString.replace(/-/g, '_');
   },
 
@@ -37,8 +38,8 @@ module.exports = generators.Base.extend({
       { tagname : this.tagname , varname : this.varName }
     );
     this.fs.copyTpl(
-      this.templatePath('wct.conf-template.js'),
-      this.destinationPath('wct.conf.js'),
+      this.templatePath('wct.conf-template.json'),
+      this.destinationPath('wct.conf.json'),
       { tagname : this.tagname , varname : this.varName }
     );
   }

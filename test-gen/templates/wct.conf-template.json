@@ -1,16 +1,20 @@
-module.exports = {
-  verbose: false,
-  plugins: {
-    local: {
-        browsers: ['chrome', 'firefox']
+{
+  "verbose": false,
+  "plugins": {
+    "local": {
+      "browsers": [
+        "chrome"
+      ]
     },
-    sauce: {
-      disabled: true,
-      "browsers": [{
+    "sauce": {
+      "disabled": true,
+      "browsers": [
+        {
           "browserName": "microsoftedge",
           "platform": "Windows 10",
           "version": ""
-        }, {
+        },
+        {
           "browserName": "internet explorer",
           "platform": "Windows 8.1",
           "version": "11"
@@ -19,15 +23,21 @@ module.exports = {
           "browserName": "safari",
           "platform": "OS X 10.11",
           "version": "9"
-        }, {
+        },
+        {
           "browserName": "safari",
           "platform": "OS X 10.10",
           "version": "8"
+        },
+        {
+          "browserName": "firefox",
+          "platform": "OS X 10.11"
         }
       ]
     }
   },
-  suites: [
-    'test/<%= tagname %>-test-fixture.html'
+  "suites": [
+    "test/<%= tagname %>-test-fixture.html"
   ]
-};
+
+}

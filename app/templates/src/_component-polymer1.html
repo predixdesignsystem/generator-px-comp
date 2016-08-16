@@ -9,6 +9,7 @@
         %><link rel="import" href="../<%= mixin %>/<%= mixin %>.html"/><%
     });
 } %>
+<link rel="import" href="css/<%= name %>-styles.html">
 
 <!--
 Element providing solution to no problem in particular. As a simple example, increments a counter when clicked.
@@ -22,9 +23,10 @@ Element providing solution to no problem in particular. As a simple example, inc
 @homepage index.html
 @demo demo.html
 -->
+
 <dom-module id="<%= name %>">
-  <link rel="import" type="css" href="css/<%= name %>.css"/>
   <template>
+    <style include="<%= name %>-styles"></style>
     <a on-click="handleClick" href="javascript:;">Click here to increment counter:</a>
     <span>{{counterValue}}</span>
   </template>

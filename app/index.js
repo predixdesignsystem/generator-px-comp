@@ -52,8 +52,8 @@ PxComponentGenerator.prototype.askFor = function askFor() {
 
     // have Yeoman greet the user.
     console.log(chalk.yellow('\n\nHello! Answer the prompts to scaffold a Px component.\n'));
-    console.log(chalk.yellow('The generated component itself is not fancy (it makes a circle on the screen that increments a counter when clicked),'));
-    console.log(chalk.yellow('but contains the Bower config, gulpfile, tests, etc. common to all Px components...\n\n'));
+    console.log(chalk.yellow('The generated component itself is not fancy (it makes a line on the screen that increments a counter when clicked),'));
+    console.log(chalk.yellow('but contains the Bower config, gulpfile, tests, etc. common to all Predix UI components...\n\n'));
 
     var prompts = [
         {
@@ -69,7 +69,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         {
             type: 'checkbox',
             name: 'cssDependencies',
-            message: 'Which of these common PXd Sass modules does your component need? (You can add more later in bower.json)',
+            message: 'Which of these common Sass modules does your component need? (You can add more later in bower.json)',
             choices: localUtil.dependencyChoicesCss
         }
     ];
@@ -82,14 +82,14 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         this.extName = null;
         this.extending = props.extending;
         this.repoUrl = 'https://github.com/PredixDev/change-this-in-package.json-please.git';
-        this.dependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], 'bower');
-        this.devDependencies = localUtil.resolveDependencies(localUtil['dependencyChoices_'], 'bowerDev');
+        this.dependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bower');
+        this.devDependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bowerDev');
 
         if (props.cssDependencies.length > 0) {
             Array.prototype.push.apply(this.devDependencies, localUtil.resolveDependencies(props.cssDependencies, 'bowerDev'));//merge in css stuff
         }
 
-        Array.prototype.push.apply(this.devDependencies, localUtil.resolveDependencies(localUtil['dependencyChoicesTest'], 'bowerDev'));//merge in test stuff
+        Array.prototype.push.apply(this.devDependencies, localUtil.resolveDependencies(localUtil.dependencyChoicesTest, 'bowerDev'));//merge in test stuff
 
         if (this.mixins) {
             try {
@@ -134,6 +134,7 @@ PxComponentGenerator.prototype.app = function app() {
     this.template('src/_component-polymer1.html', this.name + '.html', this);
     this.template('src/_component-sketch.scss', 'sass/' + this.name + '-sketch.scss', this);
     this.template('src/_component-predix.scss', 'sass/' + this.name + '-predix.scss', this);
+    this.template('src/_component-demo.scss', 'sass/' + this.name + '-demo.scss', this);
 };
 
 PxComponentGenerator.prototype.projectfiles = function projectfiles() {
@@ -141,12 +142,14 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('gitignore', '.gitignore');
     this.copy('bowerrc', '.bowerrc');
     this.copy('editorconfig', '.editorconfig');
-    this.copy('license.md', 'LICENSE.md');
+    this.copy('LICENSE.md', 'LICENSE.md');
     this.copy('src/.github/PULL_REQUEST_TEMPLATE.md', '.github/PULL_REQUEST_TEMPLATE.md');
     this.copy('src/.github/ISSUE_TEMPLATE.md', '.github/ISSUE_TEMPLATE.md');
     this.copy('CONTRIBUTING.md', 'CONTRIBUTING.md');
+    this.copy('OSS_Notice.pdf', 'OSS_Notice.pdf');
+    this.copy('.travis.yml', 'travis.yml');
+    this.copy('monogram-wdmk.png', 'monogram-wdmk.png');
 
-    this.template('doc/_demo.html', 'demo.html', this);
     this.template('doc/_index.html', 'index.html', this);
 
     var context = {
@@ -157,7 +160,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.template('_package.json', 'package.json', this);
     this.template('_favicon.ico', 'favicon.ico', this);
     this.template('_README.md', 'README.md', context);
-    this.template('_History.md', 'HISTORY.md', this);
+    this.template('_HISTORY.md', 'HISTORY.md', this);
 };
 
 PxComponentGenerator.prototype.runtime = function runtime() {

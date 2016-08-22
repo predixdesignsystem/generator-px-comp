@@ -12,22 +12,22 @@
 <link rel="import" href="css/<%= name %>-styles.html">
 
 <!--
-Element providing solution to no problem in particular. As a simple example, increments a counter when clicked.
+REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
 
 ##### Usage
 
-    <<%= name %> counter-value="1">Hi</<%= name %>>
+    <<%= name %> counter-value="1"><a href="javascript:" on-click="handleClick">Click here to increment counter:</a><span>{{counterValue}}</span></<%= name %>>
 
 @element <%= name %>
-@blurb Element providing solution to no problem in particular.
+@blurb REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
 @homepage index.html
-@demo demo.html
+@demo index.html
 -->
 
 <dom-module id="<%= name %>">
   <template>
     <style include="<%= name %>-styles"></style>
-    <a on-click="handleClick" href="javascript:;">Click here to increment counter:</a>
+    <a href="javascript:" on-click="handleClick">Click here to increment counter:</a>
     <span>{{counterValue}}</span>
   </template>
 </dom-module>
@@ -38,12 +38,18 @@ Element providing solution to no problem in particular. As a simple example, inc
     is: '<%= name %>', <% if (mixinNames) {%> behaviors: [<%= mixinNames.join(',') %>], <% } %>
 
     /**
-         * Properties block, expose attribute values to the DOM via 'notify'
-         *
-         * @property properties
-         * @type Object
-         */
+    * Properties block, expose attribute values to the DOM via 'notify'
+    *
+    * @property properties
+    * @type Object
+    */
     properties: {
+      /*
+      * this property keeps track of the number of clicks
+      *
+      * @prop counterValue
+      *
+      */
       counterValue: {
         type: Number,
         value: 0,
@@ -52,22 +58,21 @@ Element providing solution to no problem in particular. As a simple example, inc
     },
 
     /**
-         * Handles click on the element defined in 'on-click' on the template
-         *
-         * @method handleClick
-         */
+    * Handles click on the element defined in 'on-click' on the template
+    *
+    * @method handleClick
+    */
     handleClick: function(event, detail, sender) {
       this.increment();
     },
 
     /**
-         * Increments the counter
-         *
-         * @method increment
-         */
+    * Increments the counter
+    *
+    * @method increment
+    */
     increment: function() {
       this.counterValue++;
     }
-
   });
 </script>

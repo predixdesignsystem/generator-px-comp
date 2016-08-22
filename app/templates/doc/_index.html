@@ -1,13 +1,182 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= name %> API</title>
-    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="../iron-component-page/iron-component-page.html"/>
-  </head>
-  <body>
-    <iron-component-page src="<%= name %>.html" active="<%= name %>"></iron-component-page>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= name %> Demo</title>
+  <link rel="stylesheet" type="text/css" href="css/<%=name %>-demo.css" />
+  <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../px-theme/px-theme.html" />
+  <link rel="import" href="../px-api-viewer/px-api-viewer.html" />
+  <link rel="import" href="../px-tabs/px-tab-set.html" />
+  <link rel="import" href="../px-dropdown/px-dropdown.html" />
+  <link rel="import" href="<%= name %>.html" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <link rel="import" href="../px-demo-snippet/px-demo-snippet.html">
+  <link rel="import" href="../px-polymer-font-awesome/polymer-font-awesome.html" />
+  <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
+</head>
+
+<body>
+
+  <!-- Wrap elements with auto-binding template to -->
+  <!-- allow use of Polymer bindings in main document -->
+  <template id="just-for-demo" is="dom-bind">
+
+    <!-- discription -->
+    <div class="hero u-p++ text--shadow">
+      <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/<%= name %>" target="_blank">
+        <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
+      </a>
+      <h1 class="delta"><%= name %></h1>
+      <div class="description-text">
+        REPLACE ME WITH TEXT DESCRIBING THE COMPONENT
+      </div>
+      <div class="flex">
+        <img class="u-mr-- " src="https://img.shields.io/travis/PredixDev/<%= name %>.svg?style=flat-square" alt="Travis"  onerror="this.style.display='none'"/>
+        <img class="u-mr--" src="https://img.shields.io/bower/v/<%= name %>.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
+        <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/<%= name %>.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
+      </div>
+    </div>
+    <br />
+
+    <!-- mega demo -->
+    <div style="position: relative;" class="u-pb++ flex flex--col" id="defaultTab">
+      <div class="tabContainer u-pt++ u-pl++">
+        <px-tab-set selected="{{selected}}" bare no-bottom-border>
+          <template is="dom-repeat" items="{{optionsArray}}">
+            <px-tab>Option {{indexPlusOne(index)}}</px-tab>
+          </template>
+        </px-tab-set>
+      </div>
+      <px-tab-pages selected="{{selected}}">
+        <template is="dom-repeat" items="{{optionsArray}}">
+          <section class="tab-page">
+            <div class="mega-demo flex u-ph++ u-pb++">
+              <!-- Properties -->
+              <div class="properties u-ph+ u-pb+ u-mt+">
+                <p class="epsilon">Properties</p>
+                <!--
+                //code sample for dropdown
+                <div class="u-mb-">DROPDOWN TITLE:
+                  <div style="width: 100%;">
+                    <px-dropdown id="dropdownName{{indexPlusOne(index)}}" value="{{item.dropdownName}}" display-value="{{item.dropdownName}}" bound-target="properties">
+                      <px-dropdown-content
+                        items='[
+                          {"key":"one", "val": "firstVal"},
+                          {"key":"two", "val": "SecondVal"}]'>
+                      </px-dropdown-content>
+                    </px-dropdown>
+                  </div>
+                </div> -->
+                <!--
+                //code sample for input box:
+                <div class="u-mb-">Text Input Label: <input class="text-input" type="text" placeholder="{{item.textInputProp}}" value="{{item.textInputProp::input}}" /></div> -->
+                <!--
+                //code for boolean option
+                <div class="flex u-mb-">
+                  <input id="booleanID{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.booleanID::change}}">
+                  <label for$="booleanID{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
+                  <div class="u-ml-">BOOLEAN TITLE</div>
+                </div> -->
+
+              </div>
+
+              <div class="demoContainer u-mt+">
+                <!-- demo -->
+                <div class="flex flex--col">
+                  <div class="flex__item demo u-ph+ u-pb+">
+                    <div class="u-mt+">
+                      <<%=name %> >
+                      </<%=name %>>
+                    </div>
+                  </div>
+                  <div class="flex__item">
+                    <px-demo-snippet
+                      element-properties={{item}}
+                      element-name="<%=name %>">
+                    </px-demo-snippet>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="apiContainer">
+              <div class="flex flex--col api u-mt++" >
+                <!--
+                //these are optional in case the component has any children or associated components. remove this code if they don't.
+                <div class="flex">
+                  <div class="flex__item">
+                    <div class="flex flex--col childrenAssociated">
+                      <div class="componentHeader">Children Component</div>
+                      <div class="componentList">
+                        <ul>
+                          <li><a href="demo-page.html">Demo Page</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex__item">
+                    <div class="flex flex--col">
+                      <div class="componentHeader">Associated Components</div>
+                      <div class="componentList">
+                        <ul>
+                          <li><a href="demo-page.html">Demo Page</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <div>
+                  <px-api-viewer source="<%=name %>"></px-api-viewer>
+                </div>
+              </div>
+            </div>
+          </section>
+        </template>
+      </px-tab-pages>
+    </div>
+    <footer class="footer flex flex--center">
+      <div class="footer__container u-pv++">
+        <div>
+          <a href="https://ge.com/digital" >
+            <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
+          </a>
+        </div>
+        <div class="footer__list">
+          <ul class="list-inline list-inline--delimited">
+            <li>
+              <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
+            </li>
+            <li>
+              <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
+            </li>
+            <li>Copyright &copy; 2016 General Electric Company. All rights reserved.</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </template>
+  <script>
+    window.addEventListener('WebComponentsReady', function() {
+
+      var template = document.querySelector('template[is=dom-bind]'),
+          optionsArray = [
+            {
+              "conterValue" : "0",
+              "lightDomContent": '<a href="javascript:" on-click="handleClick">Click here to increment counter:</a><span>{{counterValue}}</span>'
+            }
+          ],
+          indexPlusOne = function(num) {
+            return num + 1;
+          };
+
+          template.selected = "0";
+          template.optionsArray = optionsArray;
+          template.indexPlusOne = indexPlusOne;
+    });
+  </script>
+</body>
 </html>

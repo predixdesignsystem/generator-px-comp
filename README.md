@@ -20,15 +20,15 @@ _Note: This generator works in yo 1.2 and above. To find the version of yo on yo
 
 You can think of a generator like a plug-in. `generator-px-comp` is a generator that scaffolds a Predix UI component
 
-To install the Predix UI Component generator locally, clone this repository into generator-px-comp and then from the top level directory of this project, run
+To install the Predix UI Component generator locally, run:
 
 ```
-$ git clone https://github.com/PredixDev/generator-px-comp
-$ cd generator-px-comp
-$ npm link
+$ git clone https://github.com/PredixDev/generator-px-comp #grab the generator.
+$ cd generator-px-comp #go into the generator folder.
+$ npm link #this command create a global link on your machine for the px-comp generator.
 ```
 
-Finally, initiate the generator from an empty directory to scaffold your new Px component
+Finally, initiate the generator from an empty directory to scaffold your new Predix UI component:
 
 ```
 $ cd .. #cd up and out somewhere...anywhere outside the generator
@@ -74,10 +74,9 @@ The files that are part of the Px component are:
 - **.gitignore** - A file which tells git which files to **not** commit.
 - **.jshintrc** — [JSHint](http://www.jshint.com/) configuration file for managing JavaScript code quality.
 - **<COMPONENT>.html — This is the file you'll be building your component in.
-- **sass/** — All styles should go here. This folder contains [Sass](http://sass-lang.com/) stylesheets for 'sketch' and 'predix' styles. The 'predix' styles import 'sketch' and build upon them.
-- **css/** - A folder with pre-compiled CSS files. These files should NOT be edited - see Sass files above.
-- **demo.html** - A demo page for your component.
-- **index.html** - A page which imports your component and calls the documentation builder.
+- **sass/** — All styles should go here. This folder contains [Sass](http://sass-lang.com/) stylesheets for 'sketch', 'predix' and 'demo' styles. The 'predix' styles import 'sketch' and build upon them. The 'demo' styles are used i n your demo page.
+- **css/** - A folder with pre-compiled, minified CSS files. These files should NOT be edited - see Sass files above.
+- **index.html** - A demo page which imports your component and calls the documentation builder, as well as demos off your component.
 - **test/** — All functional tests for the px-component go here.
 - **.github/PULL_REQUEST_TEMPLATE.md** - A pull request template used by Github.
 - **.github/ISSUES_TEMPLATE.md** - An issue template used by Github.
@@ -142,8 +141,8 @@ Bower uses [Semantic Versioning (aka semver)](http://semver.org/) just like npm.
 
 There are two things that can be going wrong in this situation.
 
-1. You made code changes but you didn't create a new tag
-2. You replaced an existing tag but didn't clear your bower cache
+1. You made code changes but you didn't create a new tag (Solution: create and push a new tag - See below.).
+2. You replaced an existing tag but didn't clear your bower cache (Solution: run a *bower cache clean* command in your terminal - See below.).
 
 
 #### You made code changes but you didn't create a new tag
@@ -182,7 +181,7 @@ $ bower cache clean
 # Will just clear the cache of your component
 $ bower cache clean <component>
 ```
-After you've cleaned the cache it might also be a good idea to delete that component's folder from the `components` directory. Then you can try to run `bower install` again.
+After you've cleaned the cache it might also be a good idea to delete that component's folder from the `bower_components` directory. Then you can try to run `bower install` again.
 
 ## Running on an existing component
 

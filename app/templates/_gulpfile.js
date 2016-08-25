@@ -10,6 +10,7 @@ const browserSync = require('browser-sync').create();
 const gulpif = require('gulp-if');
 const combiner = require('stream-combiner2');
 const bump = require('gulp-bump');
+const argv = require('yargs').argv;
 
 const sassOptions = {
   importer: importOnce,
@@ -32,7 +33,7 @@ function buildCSS(){
       browsers: ['last 2 versions', 'Safari 8.0'],
       cascade: false
     }),
-    $.cssmin()
+    gulpif(!argv.debug, $.cssmin())
   ]);
 }
 

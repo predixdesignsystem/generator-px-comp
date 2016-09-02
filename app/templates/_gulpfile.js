@@ -26,15 +26,20 @@ gulp.task('clean', function() {
   }).pipe($.clean());
 });
 
+function handleError(err){
+  console.log(err.toString());
+  this.emit('end');
+}
+
 function buildCSS(){
   return combiner.obj([
-    $.sass(sassOptions).on('error', $.sass.logError),
+    $.sass(sassOptions),
     $.autoprefixer({
       browsers: ['last 2 versions', 'Safari 8.0'],
       cascade: false
     }),
     gulpif(!argv.debug, $.cssmin())
-  ]);
+  ]).on('error', handleError);
 }
 
 gulp.task('sass', function() {
@@ -77,7 +82,7 @@ gulp.task('serve', function() {
     server: ['./', 'bower_components'],
   });
 
-  gulp.watch(['!${pkg.name}-styles.html', '*.html', 'bower_components/**/*.html']).on('change', browserSync.reload);
+  gulp.watch(['css/*-styles.html', '*.html', 'bower_components/**/*.html']).on('change', browserSync.reload);
   gulp.watch(['!sass/*-demo.scss', 'sass/*.scss'], ['sass']);
   gulp.watch('sass/*-demo.scss', ['demosass']);
 

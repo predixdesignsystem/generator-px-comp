@@ -8,7 +8,10 @@
   <link rel="stylesheet" type="text/css" href="css/<%=name %>-demo.css" />
   <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
   <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../px-theme/px-theme.html" />
+
+  <link rel="import" href="../px-theme/px-theme-styles.html">
+  <style include="px-theme-styles" is="custom-style"></style>
+
   <link rel="import" href="../px-api-viewer/px-api-viewer.html" />
   <link rel="import" href="../px-tabs/px-tab-set.html" />
   <link rel="import" href="../px-dropdown/px-dropdown.html" />

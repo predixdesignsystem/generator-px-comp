@@ -147,7 +147,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('src/.github/ISSUE_TEMPLATE.md', '.github/ISSUE_TEMPLATE.md');
     this.copy('CONTRIBUTING.md', 'CONTRIBUTING.md');
     this.copy('OSS_Notice.pdf', 'OSS_Notice.pdf');
-    this.copy('.travis.yml', 'travis.yml');
+    this.copy('.travis.yml', '.travis.yml');
     this.copy('monogram-wdmk.png', 'monogram-wdmk.png');
 
     this.template('doc/_index.html', 'index.html', this);

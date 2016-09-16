@@ -21,17 +21,17 @@
     "HISTORY.md"
   ],
   "dependencies": {
-    "polymer": "^1.6.0",
-    "px-theme": "~1.1.2"
+    "polymer": "^1.6.1",
+    "px-theme": "^1.1.2"
   },
   "devDependencies": {
-    "px-forms-design": "#~0.3.15",
-    "px-tables-design": "#~0.3.12",
-    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.2.3",
-    "px-polymer-font-awesome":"^0.1.8",
-    "px-tabs": "~0.4.0",
+    "px-forms-design": "^0.3.17",
+    "px-tables-design": "^0.3.13",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.2.5",
+    "px-polymer-font-awesome":"^0.1.9",
+    "px-tabs": "~0.5.2",
     "px-api-viewer": "^0.1.0",
-    "px-demo-snippet": "^0.4.0",
+    "px-demo-snippet": "^0.5.2",
     "px-list-inline-design": "^0.2.11",
     "px-toggle-design": "^0.2.12",
     "px-headings-design": "^0.2.14",
@@ -39,7 +39,7 @@
     "px-code-design": "^0.2.11",
     "px-list-bare-design": "^0.2.13",
     "px-meta-lists-design": "^0.3.4",
-    "px-dropdown": "^0.11.2",
+    "px-dropdown": "^0.12.1",
     <%- devDependencies.join('\n        ') %>
     "px-starter-kit-design": "~0.6.0"
   }

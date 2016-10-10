@@ -18,7 +18,12 @@
     "<%=name %>.png",
     "LICENSE.md",
     "CONTRIBUTING.md",
-    "HISTORY.md"
+    "HISTORY.md",
+    "monogram-wdmk.png",
+    "favicon.ico",
+    "README.md",
+    ".jshintrc",
+    ".editorconfig"
   ],
   "dependencies": {
     "polymer": "^1.6.1",

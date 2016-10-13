@@ -39,7 +39,7 @@ Insert Your demo code here.
 
 ## documentation
 
-Read the full API and view the demo [here](https://predixdev.github.io/<%= titleize(name) %>).
+Read the full API and view the demo [here](https://predixdev.github.io/<%= name %>).
 
 The documentation in this repository is supplemental to the official Predix documentation, which is continuously updated and maintained by the Predix documentation team. Go to [http://predix.io](http://predix.io)  to see the official Predix documentation.
 

@@ -1,6 +1,7 @@
 'use strict';
 
-var exec = require('child_process').exec;
+var exec = require('child_process').exec,
+    ora = require('ora');
 
 module.exports = {
 
@@ -21,6 +22,16 @@ module.exports = {
     dependencyChoicesTest: [
         //{name: 'wct', value: {bowerDev: "\"web-component-tester\": \"~2.2.6\""}}
     ],
+
+    spin: function createSpinner(text) {
+      var spinner = ora({ text: text, color: 'yellow' }).start();
+
+      spinner.also = (text) => {
+        spinner.text = spinner.text + `\n  -> ${text}`;
+      }
+
+      return spinner;
+    },
 
     resolveDependencies: function resolveDependencies(dependencies, type) {
         var resolved = [], i, dep;
@@ -59,5 +70,6 @@ module.exports = {
                 }
             }
         });
-    }
+    },
+
 };

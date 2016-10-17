@@ -1,0 +1,79 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
+    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+<% if (mixinNames) {
+    mixinNames.forEach(function(mixin) {
+        %><link rel="import" href="../<%= mixin %>/<%= mixin %>.html"/><%
+    });
+} %>
+<link rel="import" href="css/<%= name %>-styles.html">
+
+<!--
+REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
+
+##### Usage
+
+    <<%= name %> counter-value="1"><a href="javascript:" on-click="handleClick">Click here to increment counter:</a><span>{{counterValue}}</span></<%= name %>>
+
+@element <%= name %>
+@blurb REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
+@homepage index.html
+@demo index.html
+-->
+
+<dom-module id="<%= name %>">
+  <template>
+    <style include="<%= name %>-styles"></style>
+    <style include="px-theme-styles"></style>
+    <a href="javascript:" on-click="handleClick">Click here to increment counter:</a>
+    <span>{{counterValue}}</span>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: '<%= name %>', <% if (mixinNames) {%> behaviors: [<%= mixinNames.join(',') %>], <% } %>
+
+    /**
+    * Properties block, expose attribute values to the DOM via 'notify'
+    *
+    * @property properties
+    * @type Object
+    */
+    properties: {
+      /*
+      * this property keeps track of the number of clicks
+      *
+      * @prop counterValue
+      *
+      */
+      counterValue: {
+        type: Number,
+        value: 0,
+        notify: true
+      }
+    },
+
+    /**
+    * Handles click on the element defined in 'on-click' on the template
+    *
+    * @method handleClick
+    */
+    handleClick: function(event, detail, sender) {
+      this.increment();
+    },
+
+    /**
+    * Increments the counter
+    *
+    * @method increment
+    */
+    increment: function() {
+      this.counterValue++;
+    }
+  });
+</script>

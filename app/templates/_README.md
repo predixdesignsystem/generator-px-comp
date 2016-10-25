@@ -1,8 +1,8 @@
-#<%= titleize(name) %>
+#<%= name %>
 
 ## Overview
 
-<%= titleize(name) %> is a Predix UI component
+<%= name %> is a Predix UI component
 
 ## Usage
 
@@ -19,13 +19,13 @@ Node, npm and bower are necessary to install the component and dependencies. web
 First, install the component via bower on the command line.
 
 ```
-bower install <%= titleize(name) %> --save
+bower install <%= name %> --save
 ```
 
 Second, import the component to your application with the following tag in your head.
 
 ```
-<link rel="import" href="/bower_components/<%= titleize(name) %>/<%= titleize(name) %>.html"/>
+<link rel="import" href="/bower_components/<%= name %>/<%= name %>.html"/>
 ```
 
 Finally, use the component in your application:
@@ -37,7 +37,7 @@ Insert Your demo code here.
 <br />
 <hr />
 
-## documentation
+## Documentation
 
 Read the full API and view the demo [here](https://predixdev.github.io/<%= name %>).
 
@@ -70,4 +70,4 @@ Navigate to the root of that server (e.g. http://localhost:8080/) in a browser t
 
 ## Known Issues
 
-Please use [Github Issues](https://github.com/PredixDev/<%= titleize(name) %>/issues) to submit any bugs you might find.
+Please use [Github Issues](https://github.com/PredixDev/<%= name %>/issues) to submit any bugs you might find.

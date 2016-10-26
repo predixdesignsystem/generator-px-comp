@@ -22,6 +22,8 @@ Predix branding rules go in px-dropdown.scss, not in this file.
 //Settings
 @import "px-colors-design/_settings.colors.scss";
 
+// Tools
+
 // Generic
 @import "px-normalize-design/_generic.normalize.scss";
 @import "px-box-sizing-design/_generic.box-sizing.scss";
@@ -36,6 +38,8 @@ $predixBlue: #2886af;
 
 $inuit-enable-code--inline : true;
 @import "px-code-design/_base.code.scss";
+
+// Meta
 
 // Objects
 $actionable : true;
@@ -52,7 +56,7 @@ $inuit-enable-list-inline--delimited : true;
 @import "px-list-inline-design/_objects.list-inline.scss";
 
 // Component
-// 
+
 .mega-demo{
   background: $gray1;
   width: 100%;

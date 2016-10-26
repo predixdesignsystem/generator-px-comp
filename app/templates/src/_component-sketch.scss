@@ -21,6 +21,10 @@ Predix branding rules go in <%= name %>-predix.scss, not in this file.
 
 <% var depsAsString = devDependencies.join(','); %>
 
+// Settings
+
+// Tools
+
 // Generic
 @import "px-normalize-design/_generic.normalize.scss";
 @import "px-box-sizing-design/_generic.box-sizing.scss";
@@ -44,6 +48,10 @@ Predix branding rules go in <%= name %>-predix.scss, not in this file.
 <% if (depsAsString.indexOf('px-meta-buttons-design') !== -1) { %>
 @import "px-meta-buttons-design/_meta.buttons.scss";
 <% } %>
+
+// Meta
+
+// Objects
 
 // Component
 

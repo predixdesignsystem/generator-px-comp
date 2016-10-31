@@ -1,0 +1,22 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+- stable
+branches:
+  only:
+  - master
+before_script:
+- npm install bower
+- export PATH=$PWD/node_modules/.bin:$PATH
+- bower install
+script:
+- cd $TRAVIS_BUILD_DIR/scripts
+- chmod 755 ghp.sh
+- "./ghp.sh"
+before_install:
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then openssl aes-256-cbc -k "$password"
+  -in id_rsa.enc -out deploy_key -d; fi
+env:
+  global:
+  - secure: 

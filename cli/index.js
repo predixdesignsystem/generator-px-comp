@@ -28,7 +28,7 @@ module.exports = PxComponentGenerator.extend({
     generators.Base.apply(this, arguments);
 
     this.opts = {};
-    this.todo = this.opts.todo = [];
+    this.todos = this.opts.todos = [];
 
     this.option('module-type', {
         desc: 'Choose the type of module (options: "css" or "component")',
@@ -114,7 +114,7 @@ module.exports = PxComponentGenerator.extend({
       }
     },
 
-    getInfoFromPackageIfExisting: function() {
+    getInfoFromPackageIfExisting: function getInfoFromPackageIfExisting() {
       if (!this.isExisting || typeof (this.packageJson) !== "object") return;
 
       var done = this.async(),
@@ -148,16 +148,32 @@ module.exports = PxComponentGenerator.extend({
   prompting: {
     askModuleType: prompts.askModuleType,
     askModuleName: prompts.askModuleName,
-    askWhichCssExistingTasks: prompts.askWhichCssExistingTasks
+    askWhichCssExistingTasks: prompts.askWhichCssExistingTasks,
+    askForBumpMessage: prompts.askForBumpMessage
+  },
+
+  default: {
+    importNeededGenerators: function importNeededGenerators() {
+      var subgens = [];
+      console.log(this.todos);
+      this.todos.forEach(todo => {
+        if (todo === 'css.boilerplate' && subgens.indexOf('px-comp:common-boilerplate') === -1) subgens.push('px-comp:common-boilerplate');
+        if (todo === 'css.boilerplate' && subgens.indexOf('px-comp:css-boilerplate') === -1) subgens.push('px-comp:css-boilerplate');
+        if (todo === 'css.demoify' && subgens.indexOf('px-comp:css-demo') === -1) subgens.push('px-comp:css-demo');
+      });
+      subgens.forEach(subgen => {
+        this.composeWith(subgen);
+      });
+    }
   },
 
   end: {
-    sayBye: function() {
-      this.log(`Name: ${this.moduleName}`);
-      this.log(`Type: ${this.moduleType}`);
-      this.log(`Package: ${JSON.stringify(this.packageJson,null,4)}`);
-      this.log(`Tasks: ${JSON.stringify(this.todo,null,4)}`);
-      this.log("Bye.")
+    sayBye: function sayBye() {
+      // this.log(`Name: ${this.moduleName}`);
+      // this.log(`Type: ${this.moduleType}`);
+      // this.log(`Package: ${JSON.stringify(this.packageJson,null,4)}`);
+      // this.log(`Tasks: ${JSON.stringify(this.todos,null,4)}`);
+      this.log(chalk.green(`\nFinished updates for ${this.moduleName}. Bye!`))
     }
   }
 });

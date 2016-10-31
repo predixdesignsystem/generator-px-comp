@@ -21,7 +21,6 @@ module.exports = generators.Base.extend({
     * @memberof writing
     */
     cssWriteBoilerplate: function() {
-      console.log('writing...')
       log(chalk.yellow('\nAttempting to write CSS boilerplate files...'));
       // These should be the same for every repo
       this.fs.copy(

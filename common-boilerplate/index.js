@@ -21,7 +21,6 @@ module.exports = generators.Base.extend({
     * @memberof writing
     */
     commonWriteBoilerplate: function() {
-      console.log('writing...')
       log(chalk.yellow('\nAttempting to write boilerplate files...'));
       // Config files that will prefixed with a `.`
       this.fs.copy(

@@ -5,7 +5,8 @@ var chalk = require('chalk');
 module.exports = {
   askModuleType,
   askModuleName,
-  askWhichCssExistingTasks
+  askWhichCssExistingTasks,
+  askForBumpMessage
 }
 
 function askModuleType() {
@@ -76,11 +77,14 @@ ${chalk.bold('* I found the following information about this module:')}
     name: 'cssExistingTasks',
     message: 'What tasks would you like to run? Pick as many as you want. Scroll to see more.',
     choices: [
+      { value: 'css.depcheck',
+        name: 'Check dependencies and update if necessary'
+      },
       { value: 'css.boilerplate',
         name: 'Update module boilerplate files'
       },
-      { value: 'css.depcheck',
-        name: 'Check dependencies and update if necessary'
+      { value: 'css.bump',
+        name: 'Bump module version after changes'
       },
       { value: 'css.demoify',
         name: 'Add a demo page and other dependencies'
@@ -88,14 +92,33 @@ ${chalk.bold('* I found the following information about this module:')}
       { value: 'css.ghp',
         name: 'Configure Github pages for module'
       }
-    ],
-    default: ''
+    ]
   })
   .then((prompt) => {
     if (prompt.cssExistingTasks.length > 0) {
-      prompt.cssExistingTasks.forEach((task) => { this.opts.todo.push(task) });
-      this.todo = this.opts.todo;
+      prompt.cssExistingTasks.forEach((task) => { this.opts.todos.push(task) });
+      this.todos = this.opts.todos;
     }
+    done();
+  });
+};
+
+function askForBumpMessage() {
+  // Only ask if this is an existing css module, and we're running bump task
+  // if (!this.isExisting || !this.moduleName.length || !this.moduleType.length || this.moduleType !== "css" || !this.todos.length || this.todos.indexOf('css.bump') === -1) return;
+  // @TODO Implement this
+  return;
+
+  var done = this.async();
+
+  this.prompt({
+    type: 'input',
+    name: 'bumpMessage',
+    message: 'What message do you want to add to HISTORY.md for this patch? Seperate lines with |',
+    default: ''
+  })
+  .then((prompt) => {
+    this.moduleName = this.opts.moduleName = prompt.moduleName;
     done();
   });
 };

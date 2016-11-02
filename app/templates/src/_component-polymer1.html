@@ -38,18 +38,11 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
 
     is: '<%= name %>', <% if (mixinNames) {%> behaviors: [<%= mixinNames.join(',') %>], <% } %>
 
-    /**
-    * Properties block, expose attribute values to the DOM via 'notify'
-    *
-    * @property properties
-    * @type Object
-    */
     properties: {
-      /*
-      * this property keeps track of the number of clicks
+      /**
+      * This property keeps track of the number of clicks.
       *
-      * @prop counterValue
-      *
+      * @property counterValue
       */
       counterValue: {
         type: Number,
@@ -59,7 +52,7 @@ REPLACE THIS TEXT WITH A COMPONENT DESCRIPTION
     },
 
     /**
-    * Handles click on the element defined in 'on-click' on the template
+    * Handles click on the element defined in 'on-click' on the template.
     *
     * @method handleClick
     */

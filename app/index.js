@@ -134,7 +134,6 @@ PxComponentGenerator.prototype.app = function app() {
     this.template('src/_component-polymer1.html', this.name + '.html', this);
     this.template('src/_component-sketch.scss', 'sass/' + this.name + '-sketch.scss', this);
     this.template('src/_component-predix.scss', 'sass/' + this.name + '-predix.scss', this);
-    this.template('src/_component-demo.scss', 'sass/' + this.name + '-demo.scss', this);
 };
 
 PxComponentGenerator.prototype.projectfiles = function projectfiles() {
@@ -151,6 +150,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('monogram-wdmk.png', 'monogram-wdmk.png');
 
     this.template('doc/_index.html', 'index.html', this);
+    this.template('doc/demo/_index.html', 'demo/index.html', this);
 
     var context = {
         titleize: s.titleize,

@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     <%- devDependencies.join('\n        ') %>
-    "px-starter-kit-design": "~0.7.3",
+    "px-starter-kit-design": "^0.7.3",
     "px-demo": "^1.3.2"
   }
 }

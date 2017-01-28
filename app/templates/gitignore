@@ -4,6 +4,8 @@ temp
 bower_components
 .idea
 reports
-css/noprefix
 .yo-rc.json
 .github
+.gitignore
+monogram-wdmk.png
+wct.conf.json

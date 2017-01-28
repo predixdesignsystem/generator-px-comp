@@ -28,21 +28,6 @@
     "px-theme": "^2.0.3"
   },
   "devDependencies": {
-    "px-forms-design": "^1.1.4",
-    "px-tables-design": "^1.1.5",
-    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.2.5",
-    "px-polymer-font-awesome": "^1.1.2",
-    "px-tabs": "~0.6.3",
-    "px-api-viewer": "^0.1.17",
-    "px-demo-snippet": "^0.6.19",
-    "px-list-inline-design": "^0.3.2",
-    "px-toggle-design": "^1.1.4",
-    "px-headings-design": "^0.3.3",
-    "px-actionable-text-icons-design": "^1.1.3",
-    "px-code-design": "^1.1.3",
-    "px-list-bare-design": "^0.3.2",
-    "px-meta-lists-design": "^0.4.1",
-    "px-dropdown": "^2.2.6",
     <%- devDependencies.join('\n        ') %>
     "px-starter-kit-design": "~0.7.3",
     "px-demo": "^1.3.2"

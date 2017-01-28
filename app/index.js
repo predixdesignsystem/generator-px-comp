@@ -132,8 +132,7 @@ PxComponentGenerator.prototype.app = function app() {
     mkdirp('.github');
 
     this.template('src/_component-polymer1.html', this.name + '.html', this);
-    this.template('src/_component-sketch.scss', 'sass/' + this.name + '-sketch.scss', this);
-    this.template('src/_component-predix.scss', 'sass/' + this.name + '-predix.scss', this);
+    this.template('src/_component.scss', 'sass/' + this.name + '.scss', this);
 };
 
 PxComponentGenerator.prototype.projectfiles = function projectfiles() {

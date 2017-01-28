@@ -9,19 +9,15 @@
  */
 
 //
-// Sass for the "sketch" notion of the <%= name %> component
+// Sass for the for the <%= name %> component
 //
 // @author
 //
 
-/*
-THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
-Predix branding rules go in <%= name %>-predix.scss, not in this file.
-*/
-
 <% var depsAsString = devDependencies.join(','); %>
 
 // Settings
+@import "px-colors-design/_settings.colors.scss";
 
 // Tools
 

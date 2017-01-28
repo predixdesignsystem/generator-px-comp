@@ -1,185 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Predix UI</title>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><%= name %> Demo</title>
-  <link rel="stylesheet" type="text/css" href="css/<%=name %>-demo.css" />
-  <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
-  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <!--
+      Fast bootstrapping of the webcomponents-lite library. Only loads the library
+      if the browser doesn't natively support web components.
+    -->
+    <script type="text/javascript">
+    (function() {
+      'use strict';
 
-  <link rel="import" href="../px-theme/px-theme-styles.html">
-  <style include="px-theme-styles" is="custom-style"></style>
+      var onload = function() {
+        // For native Imports, manually fire WebComponentsReady so user code
+        // can use the same code path for native and polyfill'd imports.
+        if (!window.HTMLImports) {
+          document.dispatchEvent(
+            new CustomEvent('WebComponentsReady', {bubbles: true})
+          );
+        }
+      };
 
-  <link rel="import" href="../px-api-viewer/px-api-viewer.html" />
-  <link rel="import" href="../px-tabs/px-tab-set.html" />
-  <link rel="import" href="../px-dropdown/px-dropdown.html" />
-  <link rel="import" href="<%= name %>.html" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+      var webComponentsSupported = (
+        'registerElement' in document && 'import' in document.createElement('link') && 'content' in document.createElement('template')
+      );
 
-  <link rel="import" href="../px-demo-snippet/px-demo-snippet.html">
-  <link rel="import" href="../px-polymer-font-awesome/polymer-font-awesome.html" />
-  <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
-</head>
+      if (!webComponentsSupported) {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '../webcomponentsjs/webcomponents-lite.min.js';
+        script.onload = onload;
+        document.head.appendChild(script);
+      } else {
+        onload();
+      }
+    })();
+    </script>
 
-<body>
+    <!--
+      Load the Polymer library.
+    -->
+    <link rel="import" href="../polymer/polymer.html" />
 
-  <!-- Wrap elements with auto-binding template to -->
-  <!-- allow use of Polymer bindings in main document -->
-  <template id="just-for-demo" is="dom-bind">
+    <!--
+      Load the light theme (default theme).
+    -->
+    <link rel="import" href="../px-theme/px-theme-styles.html">
+    <style include="px-theme-styles" is="custom-style"></style>
 
-    <!-- description -->
-    <div class="hero u-p++ text--shadow">
-      <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/<%= name %>" target="_blank">
-        <iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github
-      </a>
-      <h1 class="delta"><%= name %></h1>
-      <p class="description-text">
-        REPLACE ME WITH TEXT DESCRIBING THE COMPONENT
-      </p>
-      <div class="flex">
-        <img class="u-mr-- " src="https://img.shields.io/travis/PredixDev/<%= name %>.svg?style=flat-square" alt="Travis"  onerror="this.style.display='none'"/>
-        <img class="u-mr--" src="https://img.shields.io/bower/v/<%= name %>.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'" />
-        <img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/<%= name %>.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'" />
-      </div>
-    </div>
-    <br />
+    <!--
+      Asynchronously import the px-catalog element, which is the entrypoint
+      for our application.
+    -->
+    <link
+        async
+        id="main-element-import"
+        rel="import"
+        href="demo/index.html">
 
-    <!-- mega demo -->
-    <div style="position: relative;" class="u-pb++ flex flex--col" id="defaultTab">
-      <div class="tabContainer u-pt++ u-pl++">
-        <px-tab-set selected="{{selected}}" bare no-bottom-border>
-          <template is="dom-repeat" items="{{optionsArray}}">
-            <px-tab>Option {{indexPlusOne(index)}}</px-tab>
-          </template>
-        </px-tab-set>
-      </div>
-      <px-tab-pages selected="{{selected}}">
-        <template is="dom-repeat" items="{{optionsArray}}">
-          <section class="tab-page">
-            <div class="mega-demo flex u-ph++ u-pb++">
-              <!-- Properties -->
-              <div class="properties u-ph+ u-pb+ u-mt+">
-                <p class="epsilon">Properties</p>
-                <!--
-                //code sample for dropdown
-                <div class="u-mb-">DROPDOWN TITLE:
-                  <div style="width: 100%;">
-                    <px-dropdown id="dropdownName{{indexPlusOne(index)}}" value="{{item.dropdownName}}" display-value="{{item.dropdownName}}" bound-target="properties">
-                      <px-dropdown-content
-                        items='[
-                          {"key":"one", "val": "firstVal"},
-                          {"key":"two", "val": "SecondVal"}]'>
-                      </px-dropdown-content>
-                    </px-dropdown>
-                  </div>
-                </div> -->
-                <!--
-                //code sample for input box:
-                <div class="u-mb-">Text Input Label: <input class="text-input" type="text" placeholder="{{item.textInputProp}}" value="{{item.textInputProp::input}}" /></div> -->
-                <!--
-                //code for boolean option
-                <div class="flex u-mb-">
-                  <input id="booleanID{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.booleanID::change}}">
-                  <label for$="booleanID{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                  <div class="u-ml-">BOOLEAN TITLE</div>
-                </div> -->
+    <!--
+      Load the app icon and manifest for Android devices.
+    -->
+    <link defer rel="icon" href="favicon.ico" type="image/x-icon" />
 
-              </div>
+    <!--
+      Basic page styles.
+    -->
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
 
-              <div class="demoContainer u-mt+">
-                <!-- demo -->
-                <div class="flex flex--col">
-                  <div class="flex__item demo u-ph+ u-pb+">
-                    <div class="u-mt+">
-                      <<%=name %> >
-                      </<%=name %>>
-                    </div>
-                  </div>
-                  <div class="flex__item">
-                    <px-demo-snippet
-                      element-properties={{item}}
-                      element-name="<%=name %>">
-                    </px-demo-snippet>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="apiContainer">
-              <div class="flex flex--col api u-mt++" >
-                <!--
-                //these are optional in case the component has any children or associated components. remove this code if they don't.
-                <div class="flex">
-                  <div class="flex__item">
-                    <div class="flex flex--col childrenAssociated">
-                      <div class="componentHeader">Children Component</div>
-                      <div class="componentList">
-                        <ul>
-                          <li><a href="demo-page.html">Demo Page</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex__item">
-                    <div class="flex flex--col">
-                      <div class="componentHeader">Associated Components</div>
-                      <div class="componentList">
-                        <ul>
-                          <li><a href="demo-page.html">Demo Page</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
-                <div>
-                  <px-api-viewer source="<%=name %>"></px-api-viewer>
-                </div>
-              </div>
-            </div>
-          </section>
-        </template>
-      </px-tab-pages>
-    </div>
-    <footer class="footer flex flex--center">
-      <div class="footer__container u-pv++">
-        <div>
-          <a href="https://ge.com/digital" >
-            <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
-          </a>
-        </div>
-        <div class="footer__list">
-          <ul class="list-inline list-inline--delimited">
-            <li>
-              <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
-            </li>
-            <li>
-              <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
-            </li>
-            <li>Copyright &copy; 2016 General Electric Company. All rights reserved.</li>
-          </ul>
-        </div>
-      </div>
-    </footer>
-  </template>
-  <script>
-    window.addEventListener('WebComponentsReady', function() {
+  <body>
+    <!-- Elements wait on the page and are upgraded after demo/index.html is loaded. -->
+    <local-element-demo></local-element-demo>
 
-      var template = document.querySelector('template[is=dom-bind]'),
-          optionsArray = [
-            {
-              "counterValue" : "0",
-              "lightDomContent": '<a href="javascript:" on-click="handleClick">Click here to increment counter:</a><span>{{counterValue}}</span>'
-            }
-          ],
-          indexPlusOne = function(num) {
-            return num + 1;
-          };
-
-          template.selected = "0";
-          template.optionsArray = optionsArray;
-          template.indexPlusOne = indexPlusOne;
-    });
-  </script>
-</body>
+    <!--
+      Attempt to register a service worker with the correct scope. Fail quietly
+      if this doesn't work, but log the result to the console.
+    -->
+    <script type="text/javascript">
+      // if ('serviceWorker' in navigator) {
+      //   navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+      //     // Registration was successful
+      //     console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      //   }).catch(function(err) {
+      //     // registration failed :(
+      //     console.log('ServiceWorker registration failed: ', err);
+      //   });
+      // }
+    </script>
+  </body>
 </html>

@@ -1,11 +1,3 @@
 node_modules
 .DS_Store
-temp
 bower_components
-.idea
-reports
-.yo-rc.json
-.github
-.gitignore
-monogram-wdmk.png
-wct.conf.json

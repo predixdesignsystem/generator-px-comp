@@ -51,7 +51,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
 
     // have Yeoman greet the user.
-    console.log(chalk.yellow('\n\nHello! Answer the prompts to scaffold a Px component.\n'));
+    console.log(chalk.yellow('\n\nHello! Answer the prompts to scaffold a Predix UI component.\n'));
     console.log(chalk.yellow('The generated component itself is not fancy (it makes a line on the screen that increments a counter when clicked),'));
     console.log(chalk.yellow('but contains the Bower config, gulpfile, tests, etc. common to all Predix UI components...\n\n'));
 
@@ -81,7 +81,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
         this.mixinNames = props.mixins ? [] : null;
         this.extName = null;
         this.extending = props.extending;
-        this.repoUrl = 'https://github.com/PredixDev/change-this-in-package.json-please.git';
+        this.repoUrl = 'https://github.com/PredixDev/'  + s(props.name).slugify().value() + '.git';
         this.dependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bower');
         this.devDependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bowerDev');
 
@@ -130,6 +130,7 @@ PxComponentGenerator.prototype.app = function app() {
     mkdirp('sass');
     mkdirp('test');
     mkdirp('.github');
+    mkdirp('scripts');
 
     this.template('src/_component-polymer1.html', this.name + '.html', this);
     this.template('src/_component.scss', 'sass/' + this.name + '.scss', this);
@@ -143,6 +144,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('LICENSE.md', 'LICENSE.md');
     this.copy('src/.github/PULL_REQUEST_TEMPLATE.md', '.github/PULL_REQUEST_TEMPLATE.md');
     this.copy('src/.github/ISSUE_TEMPLATE.md', '.github/ISSUE_TEMPLATE.md');
+    this.copy('scripts/ghp.sh', 'scripts/ghp.sh');
     this.copy('CONTRIBUTING.md', 'CONTRIBUTING.md');
     this.copy('OSS_Notice.pdf', 'OSS_Notice.pdf');
     this.copy('.travis.yml', '.travis.yml');

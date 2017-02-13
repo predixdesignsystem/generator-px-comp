@@ -26,8 +26,8 @@
         },
         {
           "browserName": "safari",
-          "platform": "OS X 10.10",
-          "version": "8"
+          "platform": "OS X 10.11",
+          "version": "10"
         },
         {
           "browserName": "firefox",

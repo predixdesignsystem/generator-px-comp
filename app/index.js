@@ -76,6 +76,7 @@ PxComponentGenerator.prototype.askFor = function askFor() {
 
     this.prompt(prompts, function (props) {
         this.name = s(props.name).slugify().value();
+        this.camelName = s(props.name).camelize().value();
         this.objName = s(props.name).slugify().value();
         this.mixins = props.mixins ? props.mixins.split(',') : null;
         this.mixinNames = props.mixins ? [] : null;
@@ -133,6 +134,7 @@ PxComponentGenerator.prototype.app = function app() {
     mkdirp('scripts');
 
     this.template('src/_component-polymer1.html', this.name + '.html', this);
+    this.template('src/_component-polymer1.es6.js', `${this.name}.es6.js`, this);
     this.template('src/_component.scss', 'sass/' + this.name + '.scss', this);
 };
 

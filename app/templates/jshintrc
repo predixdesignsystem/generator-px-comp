@@ -34,6 +34,7 @@
     "Polymer": false,
     "suite": false,
     "test": false,
-    "assert": false
+    "assert": false,
+    "flush": false
   }
 }

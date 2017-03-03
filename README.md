@@ -40,8 +40,7 @@ Finally, initiate the generator from an empty directory to scaffold your new Pre
 
 ```
 $ cd .. #cd up and out somewhere...anywhere outside the generator
-$ mkdir px-something
-$ cd px-something
+$ mkdir -p px-my-component && cd $_
 $ yo px-comp
 ```
 

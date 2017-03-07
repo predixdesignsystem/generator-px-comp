@@ -20,7 +20,15 @@ _Note: This generator works in yo 1.2 and above. To find the version of yo on yo
 
 You can think of a generator like a plug-in. `generator-px-comp` is a generator that scaffolds a Predix UI component
 
-To install the Predix UI Component generator locally, run:
+## Installation
+
+Install the generator `$ npm install -g generator-px-comp`
+
+Make a new directory and cd into it `$ mkdir -p px-my-component && cd $_`
+
+Scaffold a new Polymer project `$ yo px-comp`
+
+Alternatively, to install the Predix UI Component generator locally, run:
 
 ```
 $ git clone https://github.com/PredixDev/generator-px-comp #grab the generator.
@@ -32,8 +40,7 @@ Finally, initiate the generator from an empty directory to scaffold your new Pre
 
 ```
 $ cd .. #cd up and out somewhere...anywhere outside the generator
-$ mkdir px-something
-$ cd px-something
+$ mkdir -p px-my-component && cd $_
 $ yo px-comp
 ```
 

@@ -21,7 +21,8 @@
     "HISTORY.md",
     "README.md",
     ".jshintrc",
-    ".editorconfig"
+    ".editorconfig",
+    "*.enc"
   ],
   "dependencies": {
     "polymer": "^1.7.1",

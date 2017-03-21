@@ -1,6 +1,6 @@
 {
   "name": "generator-px-comp",
-  "version": "0.3.14",
+  "version": "0.3.18",
   "description": "A Predix UI Component Generator Using Yeoman",
   "keywords": [
     "yeoman-generator"

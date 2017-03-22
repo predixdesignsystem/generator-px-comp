@@ -41,7 +41,8 @@ function buildCSS(){
     $.sass(sassOptions),
     $.autoprefixer({
       browsers: ['last 2 versions'],
-      cascade: false
+      cascade: false,
+      flexbox: false
     }),
     gulpif(!argv.debug, $.cssmin())
   ]).on('error', handleError);

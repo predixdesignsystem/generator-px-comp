@@ -1,49 +1,37 @@
 (function() {
-  'use strict';
+  Polymer({
 
-  class <%= camelName %> {
-    /* Name for the component */
-    get is() { return '<%= name %>'; }
+    is: '<%= name %>', <% if (mixinNames) {%> behaviors: [<%= mixinNames.join(',') %>], <% } %>
 
-    /* Behaviors to import for this component */
-    <% if (mixinNames) {%>get behaviors() { return [<%= mixinNames.join(',') %>]; <% } %>
-
-    /* Properties for this component */
-    get properties() {
-      return {
-        /**
-        * This property keeps track of the number of clicks.
-        *
-        * @property counterValue
-        */
-        counterValue: {
-          type: Number,
-          value: 0,
-          notify: true
-        }
-      };
-    }
+    properties: {
+      /**
+      * This property keeps track of the number of clicks.
+      *
+      * @property counterValue
+      */
+      counterValue: {
+        type: Number,
+        value: 0,
+        notify: true
+      }
+    },
 
     /**
     * Handles click on the element defined in 'on-click' on the template.
     *
     * @method handleClick
     */
-    handleClick() {
+    handleClick: function(event, detail, sender) {
       this.increment();
-    }
+    },
 
     /**
     * Increments the counter
     *
     * @method increment
     */
-    increment() {
+    increment: function() {
       this.counterValue++;
     }
-
-  }
-
-  /* Register this element with the Polymer constructor */
-  Polymer(<%= camelName %>);
+  });
 })();

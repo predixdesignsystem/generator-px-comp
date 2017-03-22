@@ -154,6 +154,7 @@ PxComponentGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('babelrc', '.babelrc');
 
     this.template('doc/_index.html', 'index.html', this);
+    this.template('doc/_index-dark-theme.html', 'index-dark-theme.html', this);
     this.template('doc/demo/_index.html', 'demo/index.html', this);
 
     var context = {

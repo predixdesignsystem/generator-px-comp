@@ -25,12 +25,12 @@
     "*.enc"
   ],
   "dependencies": {
-    "polymer": "^1.7.1",
-    "px-theme": "^2.0.3"
+    "polymer": "^1.9.0"
   },
   "devDependencies": {
     <%- devDependencies.join('\n        ') %>
-    "px-starter-kit-design": "^0.7.3",
-    "px-demo": "^1.3.2"
+    "px-starter-kit-design": "^1.0.0",
+    "px-demo": "^2.0.0",
+    "px-theme": "^3.0.0"
   }
 }

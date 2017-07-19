@@ -81,7 +81,7 @@ The files that are part of the Px component are:
 - **.gitignore** - A file which tells git which files to **not** commit.
 - **.jshintrc** — [JSHint](http://www.jshint.com/) configuration file for managing JavaScript code quality.
 - **<COMPONENT>.html — This is the file you'll be building your component in.
-- **sass/** — All styles should go here. This folder contains [Sass](http://sass-lang.com/) stylesheets for 'sketch', 'predix' and 'demo' styles. The 'predix' styles import 'sketch' and build upon them. The 'demo' styles are used i n your demo page.
+- **sass/** — All component related styles should go here. This folder contains a [Sass](http://sass-lang.com/) stylesheet for 'component' styles. The 'component' styles are used to style the component itself.
 - **css/** - A folder with pre-compiled, minified CSS files. These files should NOT be edited - see Sass files above.
 - **index.html** - A demo page which imports your component and calls the documentation builder, as well as demos off your component.
 - **test/** — All functional tests for the px-component go here.

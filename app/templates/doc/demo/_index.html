@@ -15,7 +15,7 @@
 <link rel="import" href="../<%= name %>.html" />
 
 <!-- Demo DOM module -->
-<dom-module id="local-element-demo">
+<dom-module id="<%= name %>-demo">
   <template>
     <style include="px-demo-styles" is="custom-style"></style>
 
@@ -58,7 +58,7 @@
 </dom-module>
 <script>
   Polymer({
-    is: 'local-element-demo',
+    is: '<%= name %>-demo',
 
     properties: {
 

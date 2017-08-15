@@ -4,21 +4,19 @@ var exec = require('child_process').exec;
 
 module.exports = {
     dependencyChoicesCss: [
-        {name: 'Buttons', value: {bowerDev: '"px-meta-buttons-design": "^0.6.2",'}},
-        {name: 'Lists', value: {bowerDev: '"px-meta-lists-design": "^0.4.1",'}},
-        {name: 'Forms', value: {bowerDev: '"px-forms-design": "^1.1.4",'}},
-        {name: 'Headings', value: {bowerDev: '"px-headings-design": "^0.3.3",'}},
-        {name: 'Tables', value: {bowerDev: '"px-tables-design": "^1.1.5",'}},
-        {name: 'Flexbox Layout', value: {bowerDev: '"px-layout-design": "^0.4.3",'}},
-        {name: 'Toggle Switch', value: {bowerDev: '"px-toggle-design": "^1.1.4",'}},
-        {name: 'Content Box', value: {bowerDev: '"px-box-design": "^0.4.2",'}},
-        {name: 'Code Snippets Styling', value: {bowerDev: '"px-code-design": "^1.1.3",'}},
-        {name: 'Input Groups', value: {bowerDev: '"px-input-group-design": "^1.1.1",'}},
-        {name: 'Flag/Media Object', value: {bowerDev: '"px-flag-design": "^0.3.2",'}}
+        {name: 'Buttons', value: {bowerDev: '"px-meta-buttons-design": "^1.0.0",'}},
+        {name: 'Lists', value: {bowerDev: '"px-meta-lists-design": "^1.0.0",'}},
+        {name: 'Forms', value: {bowerDev: '"px-forms-design": "^2.0.0",'}},
+        {name: 'Headings', value: {bowerDev: '"px-headings-design": "^1.0.0",'}},
+        {name: 'Tables', value: {bowerDev: '"px-tables-design": "^2.0.0",'}},
+        {name: 'Flexbox Layout', value: {bowerDev: '"px-layout-design": "^1.0.0",'}},
+        {name: 'Toggle Switch', value: {bowerDev: '"px-toggle-design": "^2.0.0",'}},
+        {name: 'Content Box', value: {bowerDev: '"px-box-design": "^1.0.0",'}},
+        {name: 'Code Snippets Styling', value: {bowerDev: '"px-code-design": "^2.0.0",'}},
+        {name: 'Flag/Media Object', value: {bowerDev: '"px-flag-design": "^1.0.0",'}}
     ],
 
     dependencyChoicesTest: [
-        //{name: 'wct', value: {bowerDev: "\"web-component-tester\": \"~2.2.6\""}}
     ],
 
     resolveDependencies: function resolveDependencies(dependencies, type) {

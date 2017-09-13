@@ -9,8 +9,6 @@
     "npm-debug.log",
     "gulpfile.js",
     "sass",
-    "bower_components",
-    "node_modules",
     "test",
     "OSS_Notice.pdf",
     "scripts",
@@ -32,5 +30,8 @@
     "px-starter-kit-design": "^1.0.0",
     "px-demo": "^2.0.0",
     "px-theme": "^3.0.0"
+  },
+  "resolutions": {
+    "webcomponentsjs": "^0.7.0"
   }
 }

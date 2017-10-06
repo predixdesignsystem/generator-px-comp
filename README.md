@@ -31,7 +31,7 @@ Scaffold a new Polymer project `$ yo px-comp`
 Alternatively, to install the Predix UI Component generator locally, run:
 
 ```
-$ git clone https://github.com/PredixDev/generator-px-comp #grab the generator.
+$ git clone https://github.com/predixdesignsystem/generator-px-comp #grab the generator.
 $ cd generator-px-comp #go into the generator folder.
 $ npm link #this command create a global link on your machine for the px-comp generator.
 ```

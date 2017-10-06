@@ -1,12 +1,12 @@
 {
   "name": "generator-px-comp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Predix UI Component Generator Using Yeoman",
   "keywords": [
     "yeoman-generator"
   ],
-  "homepage": "https://github.com/PredixDev/generator-px-comp",
-  "bugs": "https://github.com/PredixDev/generator-px-comp/issues",
+  "homepage": "https://github.com/predixdesignsystem/generator-px-comp",
+  "bugs": "https://github.com/predixdesignsystem/generator-px-comp/issues",
   "author": {
     "name": "GE Digital",
     "email": "",
@@ -15,7 +15,7 @@
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PredixDev/generator-px-comp"
+    "url": "https://github.com/predixdesignsystem/generator-px-comp"
   },
   "scripts": {
     "test": "mocha"

@@ -17,7 +17,7 @@
 <!-- Demo DOM module -->
 <dom-module id="<%= name %>-demo">
   <template>
-    <style include="px-demo-styles" is="custom-style"></style>
+    <style include="px-demo-styles"></style>
 
     <!-- Header -->
     <px-demo-header
@@ -28,13 +28,13 @@
     <!-- Interactive -->
     <px-demo-interactive>
       <!-- Configs -->
-      <px-demo-configs configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
+      <px-demo-configs slot="px-demo-configs" configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
 
       <!-- Props -->
-      <px-demo-props props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
+      <px-demo-props slot="px-demo-props" props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
 
       <!-- Component ---------------------------------------------------------->
-      <px-demo-component>
+      <px-demo-component slot="px-demo-component">
         <<%= name %>
           counter-value="{{props.counterValue.value}}">
         </<%= name %>>
@@ -42,8 +42,9 @@
       <!-- END Component ------------------------------------------------------>
 
       <px-demo-component-snippet
-          element-properties="{{props}}"
-          element-name="<%= name %>">
+        slot="px-demo-component-snippet"
+        element-properties="{{props}}"
+        element-name="<%= name %>">
       </px-demo-component-snippet>
     </px-demo-interactive>
 

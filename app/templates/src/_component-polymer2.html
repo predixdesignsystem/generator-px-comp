@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="css/<%= name %>-styles.html">
+
+<dom-module id="<%= name %>">
+  <template>
+    <style include="<%= name %>-styles"></style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `<%= name %>`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class <%= className %> extends Polymer.Element {
+      static get is() { return '<%= name %>'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: '<%= name %>'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(<%= className %>.is, <%= className %>);
+  </script>
+</dom-module>

@@ -23,15 +23,15 @@
     "*.enc"
   ],
   "dependencies": {
-    "polymer": "^1.9.0"
+    "polymer": "#1.9 - 2"
   },
   "devDependencies": {
     <%- devDependencies.join('\n        ') %>
     "px-starter-kit-design": "^1.0.0",
-    "px-demo": "^2.0.0",
+    "px-demo": "^3.0.0",
     "px-theme": "^3.0.0"
   },
   "resolutions": {
-    "webcomponentsjs": "^0.7.0"
+    "webcomponentsjs": "^1.0.0"
   }
 }

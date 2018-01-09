@@ -14,10 +14,10 @@ module.exports = class extends Generator {
     return this.prompt([{
       type    : 'input',
       name    : 'name',
-      message : `Hello! Answer the prompts to scaffold a Predix UI component.
+      message : chalk.yellow(`\n\nHello! Answer the prompts to scaffold a Predix UI component.
 The generated component itself is not fancy (it makes a line on the screen that increments a counter when clicked),
-but contains the Bower config, gulpfile, tests, etc. common to all Predix UI components...\n\n
-What is the component\'s name, must have a "-", e.g. \'px-thing\'?'`,
+but contains the Bower config, gulpfile, tests, etc. common to all Predix UI components...\n\n`) +
+`What is the component\'s name, must have a "-", e.g. \'px-thing\'?'`,
       default : (s(this.appname).slugify().value().indexOf('-') !== -1) ? s(this.appname).slugify().value() : 'px-' + s(this.appname).slugify().value()
     }, {
       type: 'checkbox',

@@ -185,6 +185,17 @@ but contains the Bower config, gulpfile, tests, etc. common to all Predix UI com
   };
 
   end() {
+    let subGenOptions = {
+        subGen: true,
+        name: this.props.name,
+        objName: this.props.objName,
+        extending: this.props.extending,
+        dependencies: this.props.dependencies,
+        extName: this.props.extName,
+        mixinNames: this.props.mixinNames
+    };
+
+    this.composeWith(require.resolve('../test-gen'), subGenOptions);
     console.log('Generator finished. Running \'gulp\' to show you the API docs and demo pages...');
     this.spawnCommand('gulp');
     this.spawnCommand('gulp', ['serve']);

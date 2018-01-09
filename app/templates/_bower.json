@@ -29,7 +29,8 @@
     <%- devDependencies.join('\n        ') %>
     "px-starter-kit-design": "^1.0.0",
     "px-demo": "^3.0.0",
-    "px-theme": "^3.0.0"
+    "px-theme": "^3.0.0",
+    "web-component-tester": "^6.0.0"
   },
   "resolutions": {
     "webcomponentsjs": "^1.0.0"

@@ -34,7 +34,7 @@
     }
   },
   "suites": [
-    "test/<%= tagname %>-test-fixture.html"
+    "test/<%= name %>-test-fixture.html"
   ]
 
 }

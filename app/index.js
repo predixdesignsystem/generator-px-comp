@@ -29,6 +29,7 @@ What is the component\'s name, must have a "-", e.g. \'px-thing\'?'`,
       props.name = s(props.name).slugify().value();
       props.camelName = s(props.name).camelize().value();
       props.objName = s(props.name).slugify().value();
+      props.className = s(props.name).classify().value();
       props.extName = null;
       props.extending = props.extending;
       props.repoUrl = 'https://github.com/PredixDev/' + s(props.name).slugify().value() + '.git';
@@ -55,7 +56,7 @@ What is the component\'s name, must have a "-", e.g. \'px-thing\'?'`,
       }
       this.props = props;
     });
-  }
+  };
 
   writing() {
     mkdirp('sass');
@@ -69,8 +70,8 @@ What is the component\'s name, must have a "-", e.g. \'px-thing\'?'`,
       this.props
     );
     this.fs.copyTpl(
-      this.templatePath('src/_component-polymer1.es6.js'),
-      this.destinationPath(`${this.props.name}.es6.js`),
+      this.templatePath('src/_component-polymer2.html'),
+      this.destinationPath(`${this.props.name}2.html`),
       this.props
     );
     this.fs.copyTpl(
@@ -164,10 +165,29 @@ What is the component\'s name, must have a "-", e.g. \'px-thing\'?'`,
       this.destinationPath('HISTORY.md'),
       this.props
     );
+
+    this.fs.copyTpl(
+      this.templatePath('_gulpfile.js'),
+      this.destinationPath('gulpfile.js'),
+      this.props
+    );
+    this.fs.copyTpl(
+      this.templatePath('_bower.json'),
+      this.destinationPath('bower.json'),
+      this.props
+    );
+
+  };
+
+  install(){
+    this.bowerInstall();
+    this.yarnInstall();
   };
 
   end() {
-
-  }
+    console.log('Generator finished. Running \'gulp\' to show you the API docs and demo pages...');
+    this.spawnCommand('gulp');
+    this.spawnCommand('gulp', ['serve']);
+  };
 
 };

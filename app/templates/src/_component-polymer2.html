@@ -5,7 +5,8 @@
 <dom-module id="<%= name %>">
   <template>
     <style include="<%= name %>-styles"></style>
-    <h2>Hello [[prop1]]!</h2>
+    <a href="javascript:" on-click="handleClick">Click here to increment counter:</a>
+    <span>{{counterValue}}</span>
   </template>
 
   <script>
@@ -21,11 +22,34 @@
       static get is() { return '<%= name %>'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: '<%= name %>'
+          /**
+          * This property keeps track of the number of clicks.
+          *
+          * @property counterValue
+          */
+          counterValue: {
+            type: Number,
+            value: 0,
+            notify: true
           }
         };
+      }
+      /**
+      * Handles click on the element defined in 'on-click' on the template.
+      *
+      * @method handleClick
+      */
+      handleClick(event, detail, sender) {
+        this.increment();
+      },
+
+      /**
+      * Increments the counter
+      *
+      * @method increment
+      */
+      increment() {
+        this.counterValue++;
       }
     }
 

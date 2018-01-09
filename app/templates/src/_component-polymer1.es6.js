@@ -1,8 +1,6 @@
 (function() {
   Polymer({
-
-    is: '<%= name %>', <% if (mixinNames) {%> behaviors: [<%= mixinNames.join(',') %>], <% } %>
-
+    is: '<%= name %>',
     properties: {
       /**
       * This property keeps track of the number of clicks.

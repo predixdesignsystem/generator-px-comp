@@ -1,178 +1,173 @@
-'use strict';
-var util = require('util');
-var path = require('path');
-var fs = require('fs');
-var spawn = require('child_process').spawn;
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var localUtil = require('./../util/index');
-var exec = require('child_process').exec;
-var s = require('underscore.string');
-var mkdirp = require('mkdirp');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const s = require('underscore.string');
+const localUtil = require('./../util/index');
+const mkdirp = require('mkdirp');
 
 
-var PxComponentGenerator = module.exports = function PxComponentGenerator(args, options, config) {
-  yeoman.generators.Base.apply(this, arguments);
+module.exports = class extends Generator {
+  constructor(args, opts) {
+    super(args, opts);
+  }
 
-  var _this = this;
-
-  var skipInstall = options['skip-install'];
-
-  this.on('end', function() {
-
-    var subGenOptions = {
-      subGen: true,
-      name: _this.name,
-      objName: _this.objName,
-      extending: _this.extending,
-      dependencies: _this.dependencies,
-      extName: _this.extName,
-      mixinNames: _this.mixinNames
-    };
-
-    //if (_this.testing) {
-    this.composeWith('px-comp:test-gen', {
-      options: subGenOptions,
-      args: [_this.name],
-      'skip-install': true
-    });
-    //}
-
-    _this.installDependencies({
-      skipInstall: skipInstall,
-      callback: function() {
-        console.log('Generator finished. Running \'gulp\' to show you the API docs and demo pages...');
-        _this.spawnCommand('gulp');
-        _this.spawnCommand('gulp', ['serve']);
-      }
-    });
-  });
-
-  this.pkg = JSON.parse(require('html-wiring').readFileAsString(path.join(__dirname, '../package.json')));
-};
-
-util.inherits(PxComponentGenerator, yeoman.generators.Base);
-
-PxComponentGenerator.prototype.askFor = function askFor() {
-  var cb = this.async();
-
-  // have Yeoman greet the user.
-  console.log(chalk.yellow('\n\nHello! Answer the prompts to scaffold a Predix UI component.\n'));
-  console.log(chalk.yellow('The generated component itself is not fancy (it makes a line on the screen that increments a counter when clicked),'));
-  console.log(chalk.yellow('but contains the Bower config, gulpfile, tests, etc. common to all Predix UI components...\n\n'));
-
-  var prompts = [{
-      name: 'name',
-      message: 'What is the component\'s name, must have a "-", e.g. \'px-thing\'?',
-      default: (s(this.appname).slugify().value().indexOf('-') !== -1) ? s(this.appname).slugify().value() : 'px-' + s(this.appname).slugify().value()
-    },
-    {
-      name: 'mixins',
-      message: 'Optional: Local paths to Polymer behaviors the component uses, comma-separated (e.g. \'../px-my-mixin,../px-my-other-mixin\')',
-      default: null
-    },
-    {
+  prompting() {
+    return this.prompt([{
+      type    : 'input',
+      name    : 'name',
+      message : `Hello! Answer the prompts to scaffold a Predix UI component.
+The generated component itself is not fancy (it makes a line on the screen that increments a counter when clicked),
+but contains the Bower config, gulpfile, tests, etc. common to all Predix UI components...\n\n
+What is the component\'s name, must have a "-", e.g. \'px-thing\'?'`,
+      default : (s(this.appname).slugify().value().indexOf('-') !== -1) ? s(this.appname).slugify().value() : 'px-' + s(this.appname).slugify().value()
+    }, {
       type: 'checkbox',
       name: 'cssDependencies',
       message: 'Which of these common Sass modules does your component need? (You can add more later in bower.json)',
       choices: localUtil.dependencyChoicesCss
     }
-  ];
+  ]).then(props => {
+      props.name = s(props.name).slugify().value();
+      props.camelName = s(props.name).camelize().value();
+      props.objName = s(props.name).slugify().value();
+      props.extName = null;
+      props.extending = props.extending;
+      props.repoUrl = 'https://github.com/PredixDev/' + s(props.name).slugify().value() + '.git';
+      props.dependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bower');
+      props.devDependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bowerDev');
 
-  this.prompt(prompts, function(props) {
-    this.name = s(props.name).slugify().value();
-    this.camelName = s(props.name).camelize().value();
-    this.objName = s(props.name).slugify().value();
-    this.className = s(props.name).classify().value();
-    this.mixins = props.mixins ? props.mixins.split(',') : null;
-    this.mixinNames = props.mixins ? [] : null;
-    this.extName = null;
-    this.extending = props.extending;
-    this.repoUrl = 'https://github.com/PredixDev/' + s(props.name).slugify().value() + '.git';
-    this.dependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bower');
-    this.devDependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bowerDev');
-
-    if (props.cssDependencies.length > 0) {
-      Array.prototype.push.apply(this.devDependencies, localUtil.resolveDependencies(props.cssDependencies, 'bowerDev')); //merge in css stuff
-    }
-
-    Array.prototype.push.apply(this.devDependencies, localUtil.resolveDependencies(localUtil.dependencyChoicesTest, 'bowerDev')); //merge in test stuff
-
-    if (this.mixins) {
-      try {
-        var _this = this;
-        this.mixins.forEach(function(mixin) {
-          var fileName = fs.existsSync(path.resolve(mixin + '/package.json')) ? '/package.json' : '/bower.json';
-          var mixinPkg = JSON.parse(require('html-wiring').readFileAsString(mixin + fileName));
-          _this.mixinNames.push(mixinPkg.name);
-          var mixinRepoUrl = mixinPkg.repository ? mixinPkg.repository.url : 'https://github.com/change-this-in-bower.json-please.git';
-          _this.dependencies.push('"' + mixinPkg.name + '": "' + mixinRepoUrl + '"'); //merge in mixin stuff
-        });
-      } catch (e) {
-        throw new Error('If mixing in a library, the given directory of that library must be local, and contain a \'package.json\' with a \'repository: {url : ...}\' entry. ' + e.message);
+      if (props.cssDependencies.length > 0) {
+        Array.prototype.push.apply(props.devDependencies, localUtil.resolveDependencies(props.cssDependencies, 'bowerDev')); //merge in css stuff
       }
-    }
 
-    if (this.extending) {
-      try {
-        var fileName = fs.existsSync(path.resolve(this.extending + '/package.json')) ? '/package.json' : '/bower.json';
-        this.extPkg = JSON.parse(require('html-wiring').readFileAsString(this.extending + fileName));
-        this.extName = this.extPkg.name;
-        this.extObjName = s(this.extName).slugify().value();
-        this.extRepo = this.extPkg.repository ? this.extPkg.repository.url : 'https://github.com/change-this-in-bower.json-please.git';
-      } catch (e) {
-        throw new Error('If extending an existing component, the given directory of that component must be local, and contain a \'package.json\' and \'repository: {url : ...}\' entries. ' + e.message);
+      Array.prototype.push.apply(props.devDependencies, localUtil.resolveDependencies(localUtil.dependencyChoicesTest, 'bowerDev')); //merge in test stuff
+
+      if (props.extending) {
+        try {
+          var fileName = fs.existsSync(path.resolve(props.extending + '/package.json')) ? '/package.json' : '/bower.json';
+          props.extPkg = JSON.parse(require('html-wiring').readFileAsString(props.extending + fileName));
+          props.extName = props.extPkg.name;
+          props.extObjName = s(props.extName).slugify().value();
+          props.extRepo = props.extPkg.repository ? props.extPkg.repository.url : 'https://github.com/change-this-in-bower.json-please.git';
+        } catch (e) {
+          throw new Error('If extending an existing component, the given directory of that component must be local, and contain a \'package.json\' and \'repository: {url : ...}\' entries. ' + e.message);
+        }
+        props.dependencies.push('"' + props.extName + '": "' + props.extRepo + '"'); //merge in extends stuff
       }
-      this.dependencies.push('"' + this.extName + '": "' + this.extRepo + '"'); //merge in extends stuff
-    }
+      this.props = props;
+    });
+  }
 
-    cb();
-  }.bind(this));
-};
+  writing() {
+    mkdirp('sass');
+    mkdirp('test');
+    mkdirp('.github');
+    mkdirp('scripts');
 
-PxComponentGenerator.prototype.app = function app() {
+    this.fs.copyTpl(
+      this.templatePath('src/_component-polymer1.html'),
+      this.destinationPath(`${this.props.name}.html`),
+      this.props
+    );
+    this.fs.copyTpl(
+      this.templatePath('src/_component-polymer1.es6.js'),
+      this.destinationPath(`${this.props.name}.es6.js`),
+      this.props
+    );
+    this.fs.copyTpl(
+      this.templatePath('src/_component.scss'),
+      this.destinationPath(`sass/${this.props.name}.scss`),
+      this.props
+    );
 
-  mkdirp('sass');
-  mkdirp('test');
-  mkdirp('.github');
-  mkdirp('scripts');
+    this.fs.copyTpl(
+      this.templatePath('doc/_index.html'),
+      this.destinationPath('index.html'),
+      this.props
+    );
+    this.fs.copyTpl(
+      this.templatePath('doc/demo/_index.html'),
+      this.destinationPath(`demo/${this.props.name}-demo.html`),
+      this.props
+    );
 
-  this.template('src/_component-polymer1.html', this.name + '.html', this);
-  this.template('src/_component-polymer2.html', `${this.name}2.html`, this);
-  this.template('src/_component-polymer1.es6.js', `${this.name}.es6.js`, this);
-  this.template('src/_component.scss', 'sass/' + this.name + '.scss', this);
-};
+    this.fs.copy(
+      this.templatePath('jshintrc'),
+      this.destinationPath('.jshintrc')
+    );
+    this.fs.copy(
+      this.templatePath('gitignore'),
+      this.destinationPath('.gitignore')
+    );
+    this.fs.copy(
+      this.templatePath('bowerrc'),
+      this.destinationPath('.bowerrc')
+    );
+    this.fs.copy(
+      this.templatePath('editorconfig'),
+      this.destinationPath('.editorconfig')
+    );
+    this.fs.copy(
+      this.templatePath('LICENSE.md'),
+      this.destinationPath('LICENSE.md')
+    );
+    this.fs.copy(
+      this.templatePath('src/.github/PULL_REQUEST_TEMPLATE.md'),
+      this.destinationPath('.github/PULL_REQUEST_TEMPLATE.md')
+    );
+    this.fs.copy(
+      this.templatePath('src/.github/ISSUE_TEMPLATE.md'),
+      this.destinationPath('.github/ISSUE_TEMPLATE.md')
+    );
+    this.fs.copy(
+      this.templatePath('scripts/ghp.sh'),
+      this.destinationPath('scripts/ghp.sh')
+    );
+    this.fs.copy(
+      this.templatePath('CONTRIBUTING.md'),
+      this.destinationPath('CONTRIBUTING.md')
+    );
+    this.fs.copy(
+      this.templatePath('OSS_Notice.pdf'),
+      this.destinationPath('OSS_Notice.pdf')
+    );
+    this.fs.copy(
+      this.templatePath('.travis.yml'),
+      this.destinationPath('.travis.yml')
+    );
+    this.fs.copy(
+      this.templatePath('monogram-wdmk.png'),
+      this.destinationPath('monogram-wdmk.png')
+    );
 
-PxComponentGenerator.prototype.projectfiles = function projectfiles() {
-  this.copy('jshintrc', '.jshintrc');
-  this.copy('gitignore', '.gitignore');
-  this.copy('bowerrc', '.bowerrc');
-  this.copy('editorconfig', '.editorconfig');
-  this.copy('LICENSE.md', 'LICENSE.md');
-  this.copy('src/.github/PULL_REQUEST_TEMPLATE.md', '.github/PULL_REQUEST_TEMPLATE.md');
-  this.copy('src/.github/ISSUE_TEMPLATE.md', '.github/ISSUE_TEMPLATE.md');
-  this.copy('scripts/ghp.sh', 'scripts/ghp.sh');
-  this.copy('CONTRIBUTING.md', 'CONTRIBUTING.md');
-  this.copy('OSS_Notice.pdf', 'OSS_Notice.pdf');
-  this.copy('.travis.yml', '.travis.yml');
-  this.copy('monogram-wdmk.png', 'monogram-wdmk.png');
-  this.copy('babelrc', '.babelrc');
+    let context = {
+        titleize: s.titleize,
+        name: this.props.name
+    };
 
-  this.template('doc/_index.html', 'index.html', this);
-  this.template('doc/demo/_index.html', `demo/${this.name}-demo.html`, this);
-
-  var context = {
-    titleize: s.titleize,
-    name: this.name
+    this.fs.copyTpl(
+      this.templatePath('_package.json'),
+      this.destinationPath('package.json'),
+      this.props
+    );
+    this.fs.copyTpl(
+      this.templatePath('_favicon.ico'),
+      this.destinationPath('favicon.ico'),
+      this.props
+    );
+    this.fs.copyTpl(
+      this.templatePath('_README.md'),
+      this.destinationPath('README.md'),
+      context
+    );
+    this.fs.copyTpl(
+      this.templatePath('_HISTORY.md'),
+      this.destinationPath('HISTORY.md'),
+      this.props
+    );
   };
 
-  this.template('_package.json', 'package.json', this);
-  this.template('_favicon.ico', 'favicon.ico', this);
-  this.template('_README.md', 'README.md', context);
-  this.template('_HISTORY.md', 'HISTORY.md', this);
-};
+  end() {
 
-PxComponentGenerator.prototype.runtime = function runtime() {
-  this.template('_gulpfile.js', 'gulpfile.js', this);
-  this.template('_bower.json', 'bower.json', this);
+  }
+
 };

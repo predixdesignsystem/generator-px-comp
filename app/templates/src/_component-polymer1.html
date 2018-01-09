@@ -4,11 +4,6 @@
     'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
 -->
 <link rel="import" href="../polymer/polymer.html"/>
-<% if (mixinNames) {
-    mixinNames.forEach(function(mixin) {
-        %><link rel="import" href="../<%= mixin %>/<%= mixin %>.html"/><%
-    });
-} %>
 <link rel="import" href="css/<%= name %>-styles.html">
 
 <!--

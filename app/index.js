@@ -20,6 +20,11 @@ but contains the Bower config, gulpfile, tests, etc. common to all Predix UI com
 `What is the component\'s name, must have a "-", e.g. \'px-thing\'?'`,
       default : (s(this.appname).slugify().value().indexOf('-') !== -1) ? s(this.appname).slugify().value() : 'px-' + s(this.appname).slugify().value()
     }, {
+      type : 'list',
+      name: 'polymerVersion',
+      message: 'Would you like to create a Polymer 1.x/2.x hybrid component, or a Polymer 2.x only component?',
+      choices: [{name: 'Polymer 1.x/2.x hybrid', value: 'polymer1'},{name: 'Polymer 2.x', value: 'polymer2'}]
+    }, {
       type: 'checkbox',
       name: 'cssDependencies',
       message: 'Which of these common Sass modules does your component need? (You can add more later in bower.json)',
@@ -35,6 +40,12 @@ but contains the Bower config, gulpfile, tests, etc. common to all Predix UI com
       props.repoUrl = 'https://github.com/PredixDev/' + s(props.name).slugify().value() + '.git';
       props.dependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bower');
       props.devDependencies = localUtil.resolveDependencies(localUtil.dependencyChoices_, 'bowerDev');
+
+      if (props.polymerVersion === 'polymer1'){
+        props.polymerBowerVersion = '#1.9 - 2';
+      } else{
+        props.polymerBowerVersion = '^2.0.0';
+      }
 
       if (props.cssDependencies.length > 0) {
         Array.prototype.push.apply(props.devDependencies, localUtil.resolveDependencies(props.cssDependencies, 'bowerDev')); //merge in css stuff
@@ -63,17 +74,20 @@ but contains the Bower config, gulpfile, tests, etc. common to all Predix UI com
     mkdirp('test');
     mkdirp('.github');
     mkdirp('scripts');
+    if (this.props.polymerVersion === 'polymer1'){
+      this.fs.copyTpl(
+        this.templatePath('src/_component-polymer1.html'),
+        this.destinationPath(`${this.props.name}.html`),
+        this.props
+      );
 
-    this.fs.copyTpl(
-      this.templatePath('src/_component-polymer1.html'),
-      this.destinationPath(`${this.props.name}.html`),
-      this.props
-    );
-    this.fs.copyTpl(
-      this.templatePath('src/_component-polymer2.html'),
-      this.destinationPath(`${this.props.name}2.html`),
-      this.props
-    );
+    }else{
+      this.fs.copyTpl(
+        this.templatePath('src/_component-polymer2.html'),
+        this.destinationPath(`${this.props.name}.html`),
+        this.props
+      );
+    }
     this.fs.copyTpl(
       this.templatePath('src/_component.scss'),
       this.destinationPath(`sass/${this.props.name}.scss`),
@@ -192,7 +206,8 @@ but contains the Bower config, gulpfile, tests, etc. common to all Predix UI com
         extending: this.props.extending,
         dependencies: this.props.dependencies,
         extName: this.props.extName,
-        mixinNames: this.props.mixinNames
+        mixinNames: this.props.mixinNames,
+        polymerVersion: this.props.polymerVersion
     };
 
     this.composeWith(require.resolve('../test-gen'), subGenOptions);

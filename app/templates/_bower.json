@@ -23,10 +23,10 @@
     "*.enc"
   ],
   "dependencies": {
-    "polymer": "#1.9 - 2"
+    "polymer": "<%= polymerBowerVersion %>"
   },
   "devDependencies": {
-    <%- devDependencies.join('\n        ') %>
+<%- devDependencies.join('\n        ') %>
     "px-starter-kit-design": "^1.0.0",
     "px-demo": "^3.0.0",
     "px-theme": "^3.0.0",

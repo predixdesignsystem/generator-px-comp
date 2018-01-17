@@ -92,11 +92,15 @@
        * Each sub-object should contain information about the configurable property's
        * `type` (a reference to the JavaScript literal), a default value, and a set
        * of additional keys that describe the input it can be changed with.
-       * The following inputs types are currently available:
+       * The following input types are currently available:
        *
        * - 'toggle' - A toggle switch input to set Boolean values
        * - 'text' - A simple single-line text input to set String or stringified Array/Object values
+       * - 'number' - A simple single-line number input for Number values
        * - 'dropdown' - A dropdown picker that can be used to select any kind of value from a list of available options
+       * - 'typeahead' - A typeahead picker that can be used to search for values from a list of available options
+       * - 'code:JSON' - A code editor invoked with an EDIT button for displaying/editing JSON
+       * - 'code:EvaluatedJavaScript' - A code editor invoked with an EDIT button for displaying/editing JavaScript code
        *
        * Full examples for each input:
        *
@@ -118,24 +122,33 @@
        *         value: '2016-10-10T00:00:00.000Z',
        *         inputType: 'text',
        *         inputPlaceholder: 'ISO 8601 String'
+       *       },
+       *       numericValue: {
+       *         type: Number,
+       *         inputType: 'number',
+       *         inputPlaceholder: 'Enter an integer'
+       *       },
+       *       timezone: {
+       *         type: String,
+       *         inputType: 'typeahead',
+       *         inputLocalCandidates: [...]
+       *         inputPrefetchUrl: '...'
+       *       },
+       *       configuration: {
+       *         type: Object,
+       *         value: {"key":"value"},
+       *         inputType: 'code:JSON'
        *       }
        *     }
        * ```
        *
        * By default, the configurable property names are converted from camelCase
        * to Title Case and used as input labels (e.g. 'displayMode' -> 'Display Mode').
-       * Labels can be set manually through the key `inputLabel`:
-       *
-       * ```
-       *     {
-       *       preventRangeSelection: {
-       *         type: Boolean,
-       *         value: false,
-       *         inputType: 'toggle',
-       *         inputLabel: "Stop range selection"
-       *       }
-       *     }
-       * ```
+       * Labels can be overridden manually through the key `inputLabel`.
+       * A `inputHelpText` value can also be passed for supplemental information to appear below the field.
+       * If provided, an `inputDebounce` value will add a debounce to the property syncing to help prevent sync issues.
+       * Finally, `inputDisabled` can be used to still display the toggle, input, dropdown, etc - but to show
+       * it in its disabled state so the property can not be changed dynamically.
        *
        * @property demoProps
        * @type {Object}

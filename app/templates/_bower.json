@@ -34,5 +34,20 @@
   },
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
+  },
+  <% if (polymerVersion === 'polymer1') { %>
+  "variants": {
+    "1.x": {
+      "dependencies": {
+        "polymer": "^1.9.0"
+      },
+      "devDependencies": {
+        "web-component-tester": "^5.0.0"
+      },
+      "resolutions": {
+        "webcomponentsjs": "^0.7.0"
+      }
+    }
   }
+  <% } %>
 }

@@ -34,8 +34,7 @@
   },
   "resolutions": {
     "webcomponentsjs": "^1.0.0"
-  },
-  <% if (polymerVersion === 'polymer1') { %>
+  }<% if (polymerVersion === 'polymer1') { %>,
   "variants": {
     "1.x": {
       "dependencies": {
@@ -48,6 +47,5 @@
         "webcomponentsjs": "^0.7.0"
       }
     }
-  }
-  <% } %>
+  } <% } %>
 }

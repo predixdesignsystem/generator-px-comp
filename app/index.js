@@ -73,7 +73,6 @@ but contains the Bower config, gulpfile, tests, etc. common to all Predix UI com
     mkdirp('sass');
     mkdirp('test');
     mkdirp('.github');
-    mkdirp('scripts');
     if (this.props.polymerVersion === 'polymer1'){
       this.fs.copyTpl(
         this.templatePath('src/_component-polymer1.html'),
@@ -132,10 +131,6 @@ but contains the Bower config, gulpfile, tests, etc. common to all Predix UI com
     this.fs.copy(
       this.templatePath('src/.github/ISSUE_TEMPLATE.md'),
       this.destinationPath('.github/ISSUE_TEMPLATE.md')
-    );
-    this.fs.copy(
-      this.templatePath('scripts/ghp.sh'),
-      this.destinationPath('scripts/ghp.sh')
     );
     this.fs.copy(
       this.templatePath('CONTRIBUTING.md'),

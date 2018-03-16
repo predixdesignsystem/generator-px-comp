@@ -29,5 +29,6 @@
   },
   "devDependencies": {
     "mocha": "*"
-  }
+  },
+  "license": "BSD-3-Clause"
 }

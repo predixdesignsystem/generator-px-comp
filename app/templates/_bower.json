@@ -1,6 +1,7 @@
 {
   "name": "<%= name %>",
   "version": "0.0.1",
+  "license": "Apache-2.0",
   "main": [
     "<%= name %>.html"
   ],
@@ -13,7 +14,7 @@
     "OSS_Notice.pdf",
     ".github",
     "<%=name %>.png",
-    "LICENSE.md",
+    "LICENSE",
     "CONTRIBUTING.md",
     "HISTORY.md",
     "README.md",
